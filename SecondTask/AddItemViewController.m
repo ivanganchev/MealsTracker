@@ -11,6 +11,7 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UIPickerView *mealTypePickerView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *dayTime;
 @property (weak, nonatomic) IBOutlet UITextField *servingsPerWeek;
 @property NSArray *mealTypes;
 @property NSArray *mealTypesIcons;
@@ -38,9 +39,10 @@
 -(IBAction)doneButtonTap:(id)sender {
     NSInteger row = [self.mealTypePickerView selectedRowInComponent:0];
     
-    Meal* meal = [[Meal alloc] initWithTitle: self.titleTextField.text mealType: self.mealTypes[row] date: @"today" servingsPerWeek:[self.servingsPerWeek.text integerValue]];
+    Meal* meal = [[Meal alloc] initWithTitle: self.titleTextField.text mealType: self.mealTypes[row] date: @"today" servingsPerWeek: [self.servingsPerWeek.text integerValue] dayTime:[self.dayTime titleForSegmentAtIndex:[self.dayTime selectedSegmentIndex]]];
     
     [self.delegate viewController:self didAddItem:meal];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {

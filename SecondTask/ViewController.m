@@ -45,7 +45,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    cell.textLabel.text = self.mealItems[indexPath.row].mealType;
+    cell.textLabel.text = self.mealItems[indexPath.row].dayTime;
     return cell;
 }
 

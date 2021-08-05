@@ -15,8 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSString *mealType;
 @property NSString *date;
 @property NSInteger servingsPerWeek;
+@property NSString *dayTime;
 
--(instancetype) initWithTitle:(NSString *)title mealType:(NSString *) mealType date:(NSString *)date servingsPerWeek:(NSInteger)servingsPerWeek;
+-(instancetype) initWithTitle:(NSString *)title mealType:(NSString *) mealType date:(NSString *)date servingsPerWeek:(NSInteger)servingsPerWeek dayTime:(NSString *) dayTime;
 
 @end
 
