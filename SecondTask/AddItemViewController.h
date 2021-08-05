@@ -6,6 +6,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Meal.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -19,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol AddItemViewControllerDelegate <NSObject>
 - (void)viewControllerDidCancel:(AddItemViewController *)viewController;
-- (void)viewController:(AddItemViewController *)viewController didAddItem:(NSString *)item;
+- (void)viewController:(AddItemViewController *)viewController didAddItem:(Meal *)item;
 
 @optional
 -(BOOL)viewController:(AddItemViewController *)viewController validateItem:(NSString *)item;

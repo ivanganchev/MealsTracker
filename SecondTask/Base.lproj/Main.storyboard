@@ -109,8 +109,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9tl-MF-fw2">
-                                <rect key="frame" x="186" y="64" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Meal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9tl-MF-fw2">
+                                <rect key="frame" x="171.5" y="64" width="71.5" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -121,6 +121,11 @@
                                     <constraint firstAttribute="height" constant="70" id="Ao8-ue-b9b"/>
                                 </constraints>
                             </pickerView>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="i5e-Ph-8b6">
+                                <rect key="frame" x="30" y="431" width="354" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mYY-JQ-cbF"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -131,18 +136,22 @@
                             <constraint firstItem="mYY-JQ-cbF" firstAttribute="trailing" secondItem="z9j-QD-rk2" secondAttribute="trailing" constant="25" id="8B4-OF-2uy"/>
                             <constraint firstItem="xno-d0-agu" firstAttribute="top" secondItem="SmZ-5v-GBn" secondAttribute="bottom" constant="22" id="DB0-KU-rN5"/>
                             <constraint firstItem="z9j-QD-rk2" firstAttribute="top" secondItem="xno-d0-agu" secondAttribute="bottom" constant="22" id="Iey-xO-D3g"/>
+                            <constraint firstItem="i5e-Ph-8b6" firstAttribute="centerX" secondItem="mYY-JQ-cbF" secondAttribute="centerX" id="NCi-La-Gk7"/>
                             <constraint firstItem="z9j-QD-rk2" firstAttribute="leading" secondItem="mYY-JQ-cbF" secondAttribute="leading" constant="25" id="NCu-5r-8Mm"/>
                             <constraint firstItem="9tl-MF-fw2" firstAttribute="top" secondItem="mYY-JQ-cbF" secondAttribute="top" constant="20" id="PSK-cX-b5C"/>
                             <constraint firstItem="SmZ-5v-GBn" firstAttribute="leading" secondItem="mYY-JQ-cbF" secondAttribute="leading" constant="30" id="Xkl-0z-FaD"/>
+                            <constraint firstItem="i5e-Ph-8b6" firstAttribute="leading" secondItem="mYY-JQ-cbF" secondAttribute="leading" constant="30" id="bPC-Hj-1N1"/>
                             <constraint firstItem="Lca-DN-YaV" firstAttribute="centerX" secondItem="mYY-JQ-cbF" secondAttribute="centerX" id="sQm-dO-oXE"/>
                             <constraint firstItem="9tl-MF-fw2" firstAttribute="centerX" secondItem="mYY-JQ-cbF" secondAttribute="centerX" id="t22-xe-6gX"/>
                             <constraint firstItem="mYY-JQ-cbF" firstAttribute="bottom" secondItem="Lca-DN-YaV" secondAttribute="bottom" id="u1t-lO-Jip"/>
                             <constraint firstItem="mYY-JQ-cbF" firstAttribute="trailing" secondItem="xno-d0-agu" secondAttribute="trailing" constant="25" id="uAb-nc-Lk6"/>
+                            <constraint firstItem="i5e-Ph-8b6" firstAttribute="top" secondItem="z9j-QD-rk2" secondAttribute="bottom" constant="49" id="x7R-XY-Sxj"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="TitleTextField" destination="SmZ-5v-GBn" id="0gd-JD-UVL"/>
                         <outlet property="mealTypePickerView" destination="xno-d0-agu" id="bIh-FJ-dsX"/>
+                        <outlet property="servingsPerWeek" destination="i5e-Ph-8b6" id="iKU-kY-Med"/>
                         <outlet property="titleTextField" destination="SmZ-5v-GBn" id="sLx-PZ-9Fc"/>
                     </connections>
                 </viewController>

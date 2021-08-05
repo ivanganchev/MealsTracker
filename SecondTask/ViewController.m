@@ -11,7 +11,7 @@
 @interface ViewController () <AddItemViewControllerDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *mealTable;
-@property NSMutableArray *mealItems;
+@property NSMutableArray<Meal *> *mealItems;
 
 @end
 
@@ -38,14 +38,14 @@
     
 }
 
-- (void)viewController:(AddItemViewController *)viewController didAddItem:(NSString *)item{
+- (void)viewController:(AddItemViewController *)viewController didAddItem:(Meal *)item{
     [self.mealItems addObject:item];
     [self.mealTable reloadData];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    cell.textLabel.text = self.mealItems[indexPath.row];
+    cell.textLabel.text = self.mealItems[indexPath.row].mealType;
     return cell;
 }
 

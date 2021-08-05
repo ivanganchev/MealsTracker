@@ -2,7 +2,23 @@
 //  Meal.m
 //  SecondTask
 //
-//  Created by A-Team Intern on 4.08.21.
+//  Created by A-Team Intern on 5.08.21.
 //
 
-#import <Foundation/Foundation.h>
+#import "Meal.h"
+
+@implementation Meal
+    
+-(instancetype) initWithTitle:(NSString *)title mealType:(NSString *) mealType date:(NSString *)date servingsPerWeek:(NSInteger )servingsPerWeek {
+    self = [super init];
+    
+    if(self) {
+        self.title = title;
+        self.mealType = mealType;
+        self.date = date;
+        self.servingsPerWeek = servingsPerWeek;
+    }
+
+    return self;
+}
+@end
