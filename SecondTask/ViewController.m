@@ -24,7 +24,6 @@
     
     self.mealTable.dataSource = self;
     
-//    [self.mealTable registerClass: UITableViewMealsCell.class forCellReuseIdentifier: @"UITableViewMealsCellId"];
 }
 
 - (IBAction)addMeal:(id)sender {
@@ -48,7 +47,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
      UITableViewMealsCell *cell = [self.mealTable dequeueReusableCellWithIdentifier:@"UITableViewMealsCellId" forIndexPath: indexPath];
-//    cell = [[UITableViewMealsCell alloc] init];
+    //cell = [[UITableViewMealsCell alloc] init];
     
     Meal *meal = [self.mealItems objectAtIndex:indexPath.row];
     
@@ -62,4 +61,7 @@
     return self.mealItems.count;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return tableView.rowHeight; // whatever
+}
 @end

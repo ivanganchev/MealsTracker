@@ -53,11 +53,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Xfb-3N-qeX">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Xfb-3N-qeX">
                                 <rect key="frame" x="0.0" y="88" width="414" height="774"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UITableViewMealsCellId" rowHeight="80" id="O0r-MJ-pOi" customClass="UITableViewMealsCell" customModule="SecondTask">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UITableViewMealsCellId" rowHeight="80" id="O0r-MJ-pOi" customClass="UITableViewMealsCell">
                                         <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="O0r-MJ-pOi" id="abr-4u-iem">
@@ -93,8 +93,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="mealTitleLabel" destination="lJ4-sL-05B" id="bhx-wG-IUn"/>
-                                            <outlet property="mealTypeLabel" destination="nZN-q1-Jds" id="QFx-34-I5A"/>
+                                            <outlet property="mealTitleLabel" destination="lJ4-sL-05B" id="hrU-Vf-vUP"/>
+                                            <outlet property="mealTypeLabel" destination="nZN-q1-Jds" id="k7O-AP-7SN"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

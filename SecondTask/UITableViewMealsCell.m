@@ -7,10 +7,6 @@
 
 #import "UITableViewMealsCell.h"
 
-@interface UITableViewMealsCell ()
-
-@end
-
 @implementation UITableViewMealsCell
 
 - (void)awakeFromNib {

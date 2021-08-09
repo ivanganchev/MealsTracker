@@ -10,7 +10,6 @@
 @interface UITableViewMealsCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *mealTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mealTypeLabel;
-
 @end
 
 
