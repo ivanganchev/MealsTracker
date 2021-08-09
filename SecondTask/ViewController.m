@@ -7,6 +7,7 @@
 
 #import "ViewController.h"
 #import "AddItemViewController.h"
+#import "UITableViewMealsCell.h"
 
 @interface ViewController () <AddItemViewControllerDelegate, UITableViewDataSource>
 
@@ -22,6 +23,7 @@
     self.mealItems = [[NSMutableArray alloc] init];
     
     self.mealTable.dataSource = self;
+    
 }
 
 - (IBAction)addMeal:(id)sender {
@@ -44,8 +46,14 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
-    cell.textLabel.text = self.mealItems[indexPath.row].dayTime;
+     UITableViewMealsCell *cell = [self.mealTable dequeueReusableCellWithIdentifier:@"UITableViewMealsCellId" forIndexPath: indexPath];
+    //cell = [[UITableViewMealsCell alloc] init];
+    
+    Meal *meal = [self.mealItems objectAtIndex:indexPath.row];
+    
+    cell.mealTitleLabel.text = meal.title;
+    cell.mealTypeLabel.text = meal.mealType;
+                                       
     return cell;
 }
 
@@ -53,4 +61,7 @@
     return self.mealItems.count;
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return tableView.rowHeight; // whatever
+}
 @end
