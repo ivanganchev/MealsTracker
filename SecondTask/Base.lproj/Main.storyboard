@@ -64,14 +64,14 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal Type: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBd-Aq-aOm">
-                                                    <rect key="frame" x="11" y="47.5" width="78.5" height="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal Servings: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hBd-Aq-aOm">
+                                                    <rect key="frame" x="11" y="47.5" width="105" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" systemColor="systemGray3Color"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nZN-q1-Jds">
-                                                    <rect key="frame" x="89.5" y="47" width="37.5" height="18"/>
+                                                    <rect key="frame" x="116" y="47" width="37.5" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <color key="textColor" systemColor="systemGray3Color"/>
                                                     <nil key="highlightedColor"/>
@@ -85,16 +85,16 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="lJ4-sL-05B" firstAttribute="leading" secondItem="abr-4u-iem" secondAttribute="leading" constant="11" id="2Cx-pe-vnz"/>
+                                                <constraint firstAttribute="bottom" secondItem="hBd-Aq-aOm" secondAttribute="bottom" constant="14.5" id="COO-KF-zO2"/>
                                                 <constraint firstItem="lJ4-sL-05B" firstAttribute="top" secondItem="abr-4u-iem" secondAttribute="top" constant="11" id="nI9-f5-9R1"/>
                                                 <constraint firstItem="nZN-q1-Jds" firstAttribute="leading" secondItem="hBd-Aq-aOm" secondAttribute="trailing" id="oVJ-MW-0dm"/>
-                                                <constraint firstItem="hBd-Aq-aOm" firstAttribute="top" secondItem="lJ4-sL-05B" secondAttribute="bottom" constant="5" id="qbq-yy-a9B"/>
                                                 <constraint firstItem="nZN-q1-Jds" firstAttribute="top" secondItem="abr-4u-iem" secondAttribute="top" constant="47" id="sfR-We-kwN"/>
                                                 <constraint firstItem="hBd-Aq-aOm" firstAttribute="leading" secondItem="abr-4u-iem" secondAttribute="leading" constant="11" id="tds-IW-APu"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="mealServingsLabel" destination="nZN-q1-Jds" id="n1p-W9-Lum"/>
                                             <outlet property="mealTitleLabel" destination="lJ4-sL-05B" id="hrU-Vf-vUP"/>
-                                            <outlet property="mealTypeLabel" destination="nZN-q1-Jds" id="k7O-AP-7SN"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

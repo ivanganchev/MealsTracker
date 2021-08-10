@@ -13,6 +13,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *mealTable;
 @property NSMutableArray<Meal *> *mealItems;
+@property NSArray<NSString *> *mealTypeSections;
 
 @end
 
@@ -21,9 +22,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.mealItems = [[NSMutableArray alloc] init];
-    
+    self.mealTypeSections = [[NSArray alloc] initWithObjects:@"Steak", @"Chicken", @"Fish", @"Vegeterian", @"Vegan", nil];
+
     self.mealTable.dataSource = self;
-    
 }
 
 - (IBAction)addMeal:(id)sender {
@@ -43,25 +44,64 @@
 - (void)viewController:(AddItemViewController *)viewController didAddItem:(Meal *)item{
     [self.mealItems addObject:item];
     [self.mealTable reloadData];
+    
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-     UITableViewMealsCell *cell = [self.mealTable dequeueReusableCellWithIdentifier:@"UITableViewMealsCellId" forIndexPath: indexPath];
-    //cell = [[UITableViewMealsCell alloc] init];
+     UITableViewMealsCell *cell = [self.mealTable dequeueReusableCellWithIdentifier:@"UITableViewMealsCellId"];
     
-    Meal *meal = [self.mealItems objectAtIndex:indexPath.row];
+    if(cell == nil) {
+        cell = [[UITableViewMealsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewMealsCellId"];
+    }
+    NSInteger correctIndex = [self tableView:tableView correctMealItemIndex:indexPath.row section:indexPath.section];
+    
+    Meal *meal = [self.mealItems objectAtIndex:correctIndex];
     
     cell.mealTitleLabel.text = meal.title;
-    cell.mealTypeLabel.text = meal.mealType;
+    cell.mealServingsLabel.text = [NSString stringWithFormat:@"%ld", meal.servingsPerWeek];
                                        
     return cell;
 }
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.mealItems.count;
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return tableView.rowHeight;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return tableView.rowHeight; // whatever
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return self.mealTypeSections.count;
 }
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSMutableArray *tempArr = [[NSMutableArray alloc] init];
+    NSString *mealType = [self.mealTypeSections objectAtIndex:section];
+    
+    for(Meal *m in self.mealItems) {
+        if([mealType isEqualToString:m.mealType]) {
+            [tempArr addObject:m];
+        }
+    }
+    
+    return tempArr.count;
+}
+
+-(NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
+    if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
+            return nil;
+        }
+    
+    return [self.mealTypeSections objectAtIndex:section];
+ }
+
+-(NSInteger) tableView:(UITableView *)tableView
+    correctMealItemIndex:(NSInteger)row section:(NSInteger)sections{
+    NSInteger rowNumber = 0;
+    
+    for(int i = 0; i < sections; i++) {
+        rowNumber += [self tableView:tableView numberOfRowsInSection:i];
+    }
+    
+    return rowNumber + row;
+}
+
 @end
