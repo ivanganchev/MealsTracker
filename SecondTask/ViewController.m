@@ -25,6 +25,8 @@
     self.mealTypeSections = [[NSArray alloc] initWithObjects:@"Steak", @"Chicken", @"Fish", @"Vegeterian", @"Vegan", nil];
 
     self.mealTable.dataSource = self;
+    
+    
 }
 
 - (IBAction)addMeal:(id)sender {
@@ -68,7 +70,19 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.mealTypeSections.count;
+    NSInteger numOfSections = self.mealTypeSections.count;
+    if(self.mealItems.count > 0) {
+        tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+        tableView.backgroundView = nil;
+        return numOfSections;
+    } else {
+        UILabel *noDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
+        noDataLabel.text = @"No meals added";
+        noDataLabel.textAlignment = NSTextAlignmentCenter;
+        tableView.backgroundView = noDataLabel;
+        tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        return numOfSections;
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -101,7 +115,7 @@
         rowNumber += [self tableView:tableView numberOfRowsInSection:i];
     }
     
-    return rowNumber + row;
+    return rowNumber;
 }
 
 @end

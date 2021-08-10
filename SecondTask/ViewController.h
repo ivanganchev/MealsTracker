@@ -7,7 +7,7 @@
 #import <UIKit/UIKit.h>
 #import "Meal.h"
 
-@interface ViewController : UIViewController
+@interface MealsTableViewController : UIViewController
 
 @end
 
