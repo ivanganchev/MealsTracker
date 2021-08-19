@@ -40,7 +40,7 @@
     
     self.mealTable.dataSource = self;
     
-    self.manager = [[CoreDataManager alloc] initWithEntityName:@"MealEntity"];
+    self.manager = [[CoreDataManager alloc] init];
     self.mealsInSections = [self convertMealEntityToMeal];
 }
 
@@ -58,7 +58,7 @@
 }
 
 - (void)addMealToCoreData:(AddItemViewController *)viewController meal:(nonnull Meal *)meal{
-    [self.manager addEntityEntry:meal];
+    [self.manager addMealEntityEntry:meal];
     self.mealsInSections = [self convertMealEntityToMeal];
     [self.mealTable reloadData];
 }
@@ -129,7 +129,7 @@
 
 -(NSMutableDictionary*) convertMealEntityToMeal {
     
-    NSMutableArray* entities = self.manager.fetchAllEntries;
+    NSMutableArray* entities = [self.manager fetchAllEntries:@"MealEntity"];
     
     NSMutableArray<Meal*>* newArray = [[NSMutableArray alloc] init];
     for(MealEntity *e in entities) {
@@ -158,7 +158,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSMutableArray<Meal*> *tempArr = [self.mealsInSections objectForKey:self.keys[indexPath.section]];
-        [self.manager removeEntryById:tempArr[indexPath.row].identificaiton];
+        [self.manager removeEntryById:tempArr[indexPath.row].identificaiton entityName:@"MealEntity"];
         self.mealsInSections = [self convertMealEntityToMeal];
         
         [self.mealTable reloadData];

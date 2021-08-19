@@ -9,19 +9,16 @@
 
 @implementation CoreDataManager
 
--(instancetype)initWithEntityName:(NSString *)entity {
+-(instancetype)init {
     self = [super init];
     
-    self.entityName = entity;
     self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     self.context = self.appDelegate.persistentContainer.viewContext;
-    self.requestMeals = [NSFetchRequest fetchRequestWithEntityName:entity];
-    self.mealEntityDescription = [NSEntityDescription entityForName:entity inManagedObjectContext:self.context];
     return self;
 }
 
--(void)addEntityEntry:(Meal *)entry {
-    self.mealEntityManagedObject = [NSEntityDescription insertNewObjectForEntityForName:self.entityName inManagedObjectContext:self.context];
+-(void)addMealEntityEntry:(Meal *)entry {
+    self.mealEntityManagedObject = [NSEntityDescription insertNewObjectForEntityForName:@"MealEntity" inManagedObjectContext:self.context];
     
     [self.mealEntityManagedObject setValue:entry.mealType forKey:@"mealType"];
     [self.mealEntityManagedObject setValue:entry.title forKey:@"title"];
@@ -33,14 +30,15 @@
     [self.appDelegate saveContext];
 }
 
--(void)removeEntryById:(NSUUID *)identification {
-    
+-(void)removeEntryById:(NSUUID *)identification entityName:(NSString *)entityName {
+    NSFetchRequest *requestMeals = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    NSEntityDescription *mealEntityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.context];
     NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identification == %@", identification];
-    [self.requestMeals setEntity:self.mealEntityDescription];
-    [self.requestMeals setPredicate:predicate];
+    [requestMeals setEntity:mealEntityDescription];
+    [requestMeals setPredicate:predicate];
 
     NSError *error;
-    NSMutableArray *items = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:self.requestMeals error:&error]];
+    NSMutableArray *items = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:&error]];
 
     for(NSManagedObject *managedObj in items) {
         [self.context deleteObject:managedObj];
@@ -50,9 +48,9 @@
     
 }
 
--(NSMutableArray*)fetchAllEntries {
-    self.requestMeals.predicate = nil;
-    return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:self.requestMeals error:nil]];
+-(NSMutableArray*)fetchAllEntries:(NSString *)entityName{
+    NSFetchRequest *requestMeals = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:nil]];
 }
 
 @end
