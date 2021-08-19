@@ -24,8 +24,10 @@
 
 @implementation MealsTableViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBar.hidden = NO;
     [self.mealTable setEditing:NO animated:YES];
     self.mealItems = [[NSMutableArray alloc] init];
     self.mealTypeSections = [[NSArray alloc] initWithObjects:@"Steak", @"Chicken", @"Fish", @"Vegeterian", @"Vegan", nil];
@@ -58,6 +60,7 @@
 }
 
 - (void)addMealToCoreData:(AddItemViewController *)viewController meal:(nonnull Meal *)meal{
+    meal.date = self.date1;
     [self.manager addMealEntityEntry:meal];
     self.mealsInSections = [self convertMealEntityToMeal];
     [self.mealTable reloadData];
@@ -124,12 +127,12 @@
  }
 
 - (IBAction)navigateToPreviousViewController:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 -(NSMutableDictionary*) convertMealEntityToMeal {
     
-    NSMutableArray* entities = [self.manager fetchAllEntries:@"MealEntity"];
+    NSMutableArray* entities = [self.manager fetchEntriesByDate:@"MealEntity" date:self.date1];
     
     NSMutableArray<Meal*>* newArray = [[NSMutableArray alloc] init];
     for(MealEntity *e in entities) {

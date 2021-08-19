@@ -24,7 +24,7 @@
     [self.mealEntityManagedObject setValue:entry.title forKey:@"title"];
     [self.mealEntityManagedObject setValue:[NSNumber numberWithInteger:entry.servingsPerDay] forKey:@"servingsPerDay"];
     [self.mealEntityManagedObject setValue:entry.dayTime forKey:@"dayTime"];
-    [self.mealEntityManagedObject setValue:@"today" forKey:@"date"];
+    [self.mealEntityManagedObject setValue:entry.date forKey:@"date"];
     [self.mealEntityManagedObject setValue:[NSUUID UUID] forKey:@"identification"];
     
     [self.appDelegate saveContext];
@@ -53,4 +53,16 @@
     return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:nil]];
 }
 
+-(NSMutableArray*)fetchEntriesByDate:(NSString *)entityName date:(NSString *)date {
+    NSFetchRequest *requestMeals = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    NSEntityDescription *mealEntityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.context];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"date == %@", date];
+    [requestMeals setEntity:mealEntityDescription];
+    [requestMeals setPredicate:predicate];
+
+    NSError *error;
+    NSMutableArray *items = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:&error]];
+    
+    return items;
+}
 @end

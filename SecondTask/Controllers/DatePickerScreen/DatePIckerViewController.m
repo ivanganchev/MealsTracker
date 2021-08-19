@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.navigationBar.hidden = YES;
     // Do any additional setup after loading the view.
 }
 
@@ -35,9 +36,14 @@
     UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
     MealsTableViewController *mealTableVC = [storyBoard instantiateViewControllerWithIdentifier:@"MealTableNavigationController"];
-    //TODO Mealtableviewcontroller property date - set it here
-    [mealTableVC setModalPresentationStyle:UIModalPresentationFullScreen];
-    [self presentViewController:mealTableVC animated:YES completion:nil];
+    mealTableVC.date1 = stringFromDate;
+    
+    [self.navigationController pushViewController:mealTableVC animated:YES];
 }
+
+-(void) viewWillAppear:(BOOL)animated {
+    self.navigationController.navigationBar.hidden = YES;
+}
+
 
 @end

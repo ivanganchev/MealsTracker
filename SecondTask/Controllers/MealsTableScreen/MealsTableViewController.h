@@ -8,6 +8,6 @@
 #import "Meal.h"
 
 @interface MealsTableViewController : UIViewController
-
+@property (nonatomic, retain) NSString *date1;
 @end
 
