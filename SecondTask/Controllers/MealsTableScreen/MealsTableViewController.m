@@ -63,7 +63,7 @@
 - (void)viewControllerDidCancel:(AddItemViewController *)viewController {
 }
 
-- (void)viewController:(AddItemViewController *)viewController{
+- (void)addMealToCoreData:(AddItemViewController *)viewController{
     self.mealsInSections = [self convertMealEntityToMeal];
     [self.mealTable reloadData];
 }
@@ -160,6 +160,8 @@
     }
     
     self.mealsInSections = [self convertMealEntityToMeal];
+    [self.appDelegate saveContext];
+    
     [self.mealTable reloadData];
 }
 

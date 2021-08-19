@@ -61,7 +61,7 @@
     
     [self.appDelegate saveContext];
     
-    [self.delegate viewController:self];
+    [self.delegate addMealToCoreData:self];
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
