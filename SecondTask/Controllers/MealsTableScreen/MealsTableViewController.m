@@ -10,19 +10,16 @@
 #import "UITableViewMealsCell.h"
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
+#import "CoreDataManager.h"
 
 @interface MealsTableViewController () <AddItemViewControllerDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *mealTable;
 @property NSMutableArray<Meal *> *mealItems;
 @property NSArray<NSString *> *mealTypeSections;
-@property NSFetchRequest *requestMeals;
-@property AppDelegate *appDelegate;
-@property NSManagedObjectContext *context;
-@property NSManagedObject *mealEntity;
 @property NSArray *keys;
 @property NSMutableDictionary *mealsInSections;
-
+@property CoreDataManager *manager;
 @end
 
 @implementation MealsTableViewController
@@ -43,10 +40,7 @@
     
     self.mealTable.dataSource = self;
     
-    self.requestMeals = [NSFetchRequest fetchRequestWithEntityName:@"MealEntity"];
-    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    self.context = self.appDelegate.persistentContainer.viewContext;
-    
+    self.manager = [[CoreDataManager alloc] initWithEntityName:@"MealEntity"];
     self.mealsInSections = [self convertMealEntityToMeal];
 }
 
@@ -63,7 +57,8 @@
 - (void)viewControllerDidCancel:(AddItemViewController *)viewController {
 }
 
-- (void)addMealToCoreData:(AddItemViewController *)viewController{
+- (void)addMealToCoreData:(AddItemViewController *)viewController meal:(nonnull Meal *)meal{
+    [self.manager addEntityEntry:meal];
     self.mealsInSections = [self convertMealEntityToMeal];
     [self.mealTable reloadData];
 }
@@ -80,9 +75,6 @@
     Meal *meal = [meals objectAtIndex:indexPath.row];
     
     cell.mealTitleLabel.text = meal.title;
-    cell.cellIndex = indexPath.row;
-    cell.cellMealType = meal.mealType;
-    cell.delegate = self;
     cell.mealServingsLabel.text = [NSString stringWithFormat:@"%ld", meal.servingsPerDay];
                                        
     return cell;
@@ -131,23 +123,13 @@
     return [self.mealTypeSections objectAtIndex:section];
  }
 
--(NSInteger) tableView:(UITableView *)tableView
-    correctMealItemIndex:(NSInteger)row section:(NSInteger)sections{
-    NSInteger rowNumber = 0;
-    
-    for(int i = 0; i < sections - 1; i++) {
-        rowNumber += [self tableView:tableView numberOfRowsInSection:i];
-    }
-    
-    return rowNumber + row;
-}
 - (IBAction)navigateToPreviousViewController:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(NSMutableDictionary*) convertMealEntityToMeal {
-    self.requestMeals.predicate = nil;
-    NSArray* entities = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:self.requestMeals error:nil]];
+    
+    NSMutableArray* entities = self.manager.fetchAllEntries;
     
     NSMutableArray<Meal*>* newArray = [[NSMutableArray alloc] init];
     for(MealEntity *e in entities) {
@@ -176,20 +158,8 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSMutableArray<Meal*> *tempArr = [self.mealsInSections objectForKey:self.keys[indexPath.section]];
-        NSEntityDescription *entity = [NSEntityDescription entityForName:@"MealEntity" inManagedObjectContext:self.context];
-        NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identification == %@", tempArr[indexPath.row].identificaiton];
-        [self.requestMeals setEntity:entity];
-        [self.requestMeals setPredicate:predicate];
-
-        NSError *error;
-        NSMutableArray *items = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:self.requestMeals error:&error]];
-
-        for(NSManagedObject *managedObj in items) {
-            [self.context deleteObject:managedObj];
-        }
-        
+        [self.manager removeEntryById:tempArr[indexPath.row].identificaiton];
         self.mealsInSections = [self convertMealEntityToMeal];
-        [self.appDelegate saveContext];
         
         [self.mealTable reloadData];
     }

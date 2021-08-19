@@ -19,6 +19,7 @@
         self.date = date;
         self.servingsPerDay = servingsPerDay;
         self.dayTime = dayTime;
+        self.identificaiton = [NSUUID UUID];
     }
 
     return self;

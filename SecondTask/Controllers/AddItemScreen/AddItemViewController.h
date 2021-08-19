@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol AddItemViewControllerDelegate <NSObject>
 - (void)viewControllerDidCancel:(AddItemViewController *)viewController;
-- (void)addMealToCoreData:(AddItemViewController *)viewController;
+- (void)addMealToCoreData:(AddItemViewController *)viewController meal:(Meal *)meal;
 
 @optional
 -(BOOL)viewController:(AddItemViewController *)viewController validateItem:(NSString *)item;

@@ -11,9 +11,6 @@
 @interface UITableViewMealsCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *mealTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mealServingsLabel;
-@property (weak, nonatomic) id<CellDelegate>delegate;
-@property (assign, nonatomic) NSInteger cellIndex;
-@property (weak, nonatomic) NSString *cellMealType;
 @end
 
 

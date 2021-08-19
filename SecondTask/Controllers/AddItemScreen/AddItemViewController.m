@@ -17,10 +17,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *servingsPerWeek;
 @property NSArray *mealTypes;
 @property NSArray *mealTypesIcons;
-@property AppDelegate *appDelegate;
-@property NSManagedObjectContext *context;
-@property NSManagedObject *mealEntity;
-
 @end
 
 @implementation AddItemViewController
@@ -33,11 +29,6 @@
     
     self.mealTypePickerView.dataSource = self;
     self.mealTypePickerView.delegate = self;
-    
-    self.appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    self.context = self.appDelegate.persistentContainer.viewContext;
-    
-    self.mealEntity = [NSEntityDescription insertNewObjectForEntityForName:@"MealEntity" inManagedObjectContext:self.context];
 }
 
 -(IBAction)cancel:(id)sender {
@@ -48,20 +39,12 @@
 
 -(IBAction)doneButtonTap:(id)sender {
     NSInteger row = [self.mealTypePickerView selectedRowInComponent:0];
-    
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
     
-    [self.mealEntity setValue:self.mealTypes[row] forKey:@"mealType"];
-    [self.mealEntity setValue:self.titleTextField.text forKey:@"title"];
-    [self.mealEntity setValue:[f numberFromString: self.servingsPerWeek.text] forKey:@"servingsPerDay"];
-    [self.mealEntity setValue:[self.dayTime titleForSegmentAtIndex:[self.dayTime selectedSegmentIndex]] forKey:@"dayTime"];
-    [self.mealEntity setValue:@"today" forKey:@"date"];
-    [self.mealEntity setValue:[NSUUID UUID] forKey:@"identification"];
-    
-    [self.appDelegate saveContext];
-    
-    [self.delegate addMealToCoreData:self];
+    Meal *meal = [[Meal alloc] initWithTitle:self.titleTextField.text mealType:self.mealTypes[row] date:@"today" servingsPerDay:  [self.servingsPerWeek.text intValue] dayTime: [self.dayTime titleForSegmentAtIndex:[self.dayTime selectedSegmentIndex]]];
+
+    [self.delegate addMealToCoreData:self meal:meal];
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
