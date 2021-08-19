@@ -20,4 +20,10 @@
     // Configure the view for the selected state
 }
 
+- (IBAction)deleteButtonTap:(id)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didClickOnCellAtIndex:mealType:)]) {
+            [self.delegate didClickOnCellAtIndex:self.cellIndex mealType:self.cellMealType];
+        }
+}
+
 @end

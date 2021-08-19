@@ -5,11 +5,11 @@
 //  Created by A-Team Intern on 10.08.21.
 //
 
-#import "ViewController.h"
+#import "MealsTableViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DatePIckerViewController : ViewController
+@interface DatePIckerViewController : MealsTableViewController
 
 @end
 
