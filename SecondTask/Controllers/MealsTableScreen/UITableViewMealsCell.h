@@ -16,7 +16,4 @@
 @property (weak, nonatomic) NSString *cellMealType;
 @end
 
-@protocol CellDelegate <NSObject>
-- (void)didClickOnCellAtIndex:(NSInteger)cellIndex mealType:(NSString *) cellMealType;
-@end
 

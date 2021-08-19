@@ -113,24 +113,13 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N6T-kx-N1j">
-                                                    <rect key="frame" x="300" y="29" width="94" height="22"/>
-                                                    <state key="normal" title="Button" image="trash" catalog="system"/>
-                                                    <connections>
-                                                        <action selector="deleteButtonTap:" destination="O0r-MJ-pOi" eventType="touchUpInside" id="gf3-0g-AA0"/>
-                                                    </connections>
-                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="lJ4-sL-05B" firstAttribute="leading" secondItem="abr-4u-iem" secondAttribute="leading" constant="11" id="2Cx-pe-vnz"/>
                                                 <constraint firstAttribute="bottom" secondItem="hBd-Aq-aOm" secondAttribute="bottom" constant="14.5" id="COO-KF-zO2"/>
-                                                <constraint firstItem="N6T-kx-N1j" firstAttribute="top" secondItem="abr-4u-iem" secondAttribute="top" constant="29" id="JCC-Kg-dzb"/>
-                                                <constraint firstItem="N6T-kx-N1j" firstAttribute="leading" secondItem="abr-4u-iem" secondAttribute="leading" constant="300" id="k7c-nR-tS1"/>
-                                                <constraint firstAttribute="bottom" secondItem="N6T-kx-N1j" secondAttribute="bottom" constant="29" id="kov-EV-ED2"/>
                                                 <constraint firstItem="lJ4-sL-05B" firstAttribute="top" secondItem="abr-4u-iem" secondAttribute="top" constant="11" id="nI9-f5-9R1"/>
                                                 <constraint firstItem="nZN-q1-Jds" firstAttribute="leading" secondItem="hBd-Aq-aOm" secondAttribute="trailing" id="oVJ-MW-0dm"/>
                                                 <constraint firstItem="nZN-q1-Jds" firstAttribute="top" secondItem="abr-4u-iem" secondAttribute="top" constant="47" id="sfR-We-kwN"/>
-                                                <constraint firstAttribute="trailing" secondItem="N6T-kx-N1j" secondAttribute="trailing" constant="20" symbolic="YES" id="tMg-YI-Nt0"/>
                                                 <constraint firstItem="hBd-Aq-aOm" firstAttribute="leading" secondItem="abr-4u-iem" secondAttribute="leading" constant="11" id="tds-IW-APu"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -286,7 +275,6 @@
     <resources>
         <image name="arrow.uturn.backward" catalog="system" width="128" height="112"/>
         <image name="plus" catalog="system" width="128" height="113"/>
-        <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 
-@interface MealsTableViewController () <AddItemViewControllerDelegate, UITableViewDataSource, CellDelegate>
+@interface MealsTableViewController () <AddItemViewControllerDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *mealTable;
 @property NSMutableArray<Meal *> *mealItems;
@@ -29,7 +29,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.mealTable setEditing:YES animated:YES];
+    [self.mealTable setEditing:NO animated:YES];
     self.mealItems = [[NSMutableArray alloc] init];
     self.mealTypeSections = [[NSArray alloc] initWithObjects:@"Steak", @"Chicken", @"Fish", @"Vegeterian", @"Vegan", nil];
     
@@ -145,26 +145,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didClickOnCellAtIndex:(NSInteger)cellIndex mealType:(NSString *)cellMealType{
-    NSMutableArray<Meal*> *tempArr = [self.mealsInSections objectForKey:cellMealType];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"MealEntity" inManagedObjectContext:self.context];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identification == %@", tempArr[cellIndex].identificaiton];
-    [self.requestMeals setEntity:entity];
-    [self.requestMeals setPredicate:predicate];
-
-    NSError *error;
-    NSMutableArray *items = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:self.requestMeals error:&error]];
-
-    for(NSManagedObject *managedObj in items) {
-        [self.context deleteObject:managedObj];
-    }
-    
-    self.mealsInSections = [self convertMealEntityToMeal];
-    [self.appDelegate saveContext];
-    
-    [self.mealTable reloadData];
-}
-
 -(NSMutableDictionary*) convertMealEntityToMeal {
     self.requestMeals.predicate = nil;
     NSArray* entities = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:self.requestMeals error:nil]];
@@ -187,6 +167,32 @@
     }
     
     return dict;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        NSMutableArray<Meal*> *tempArr = [self.mealsInSections objectForKey:self.keys[indexPath.section]];
+        NSEntityDescription *entity = [NSEntityDescription entityForName:@"MealEntity" inManagedObjectContext:self.context];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identification == %@", tempArr[indexPath.row].identificaiton];
+        [self.requestMeals setEntity:entity];
+        [self.requestMeals setPredicate:predicate];
+
+        NSError *error;
+        NSMutableArray *items = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:self.requestMeals error:&error]];
+
+        for(NSManagedObject *managedObj in items) {
+            [self.context deleteObject:managedObj];
+        }
+        
+        self.mealsInSections = [self convertMealEntityToMeal];
+        [self.appDelegate saveContext];
+        
+        [self.mealTable reloadData];
+    }
 }
 
 @end

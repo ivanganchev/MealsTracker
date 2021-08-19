@@ -7,24 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8E0D1A0C26C2CEB20028B5FB /* DatePIckerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D1A0B26C2CEB20028B5FB /* DatePIckerViewController.m */; };
+		8E4A871C26CD23E6001985FA /* MealModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A871A26CD23E6001985FA /* MealModel.xcdatamodeld */; };
 		8E951C1826B921A0006A4950 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E951C1726B921A0006A4950 /* AppDelegate.m */; };
 		8E951C1B26B921A0006A4950 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E951C1A26B921A0006A4950 /* SceneDelegate.m */; };
-		8E951C1E26B921A0006A4950 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E951C1D26B921A0006A4950 /* ViewController.m */; };
+		8E951C1E26B921A0006A4950 /* MealsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E951C1D26B921A0006A4950 /* MealsTableViewController.m */; };
 		8E951C2126B921A0006A4950 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E951C1F26B921A0006A4950 /* Main.storyboard */; };
 		8E951C2326B921A9006A4950 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E951C2226B921A9006A4950 /* Assets.xcassets */; };
 		8E951C2626B921A9006A4950 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8E951C2426B921A9006A4950 /* LaunchScreen.storyboard */; };
 		8E951C2926B921A9006A4950 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E951C2826B921A9006A4950 /* main.m */; };
 		8E951C3626B938E6006A4950 /* AddItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E951C3526B938E6006A4950 /* AddItemViewController.m */; };
+		8E9DFFCA26C16A3D00CE3F2D /* UITableViewMealsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9DFFC726C16A3C00CE3F2D /* UITableViewMealsCell.m */; };
+		8E9DFFCB26C16A3D00CE3F2D /* Meal.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E9DFFC926C16A3D00CE3F2D /* Meal.m */; };
+		8E9FD4D126CBB1C000DABC61 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E9FD4D026CBB1C000DABC61 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8E0D1A0A26C2CEB20028B5FB /* DatePIckerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DatePIckerViewController.h; sourceTree = "<group>"; };
+		8E0D1A0B26C2CEB20028B5FB /* DatePIckerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DatePIckerViewController.m; sourceTree = "<group>"; };
+		8E4A871B26CD23E6001985FA /* MealModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MealModel.xcdatamodel; sourceTree = "<group>"; };
 		8E951C1326B921A0006A4950 /* SecondTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SecondTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8E951C1626B921A0006A4950 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		8E951C1726B921A0006A4950 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		8E951C1926B921A0006A4950 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
 		8E951C1A26B921A0006A4950 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
-		8E951C1C26B921A0006A4950 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		8E951C1D26B921A0006A4950 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		8E951C1C26B921A0006A4950 /* MealsTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MealsTableViewController.h; sourceTree = "<group>"; };
+		8E951C1D26B921A0006A4950 /* MealsTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MealsTableViewController.m; sourceTree = "<group>"; };
 		8E951C2026B921A0006A4950 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8E951C2226B921A9006A4950 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8E951C2526B921A9006A4950 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -32,6 +40,11 @@
 		8E951C2826B921A9006A4950 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8E951C3426B938E6006A4950 /* AddItemViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddItemViewController.h; sourceTree = "<group>"; };
 		8E951C3526B938E6006A4950 /* AddItemViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddItemViewController.m; sourceTree = "<group>"; };
+		8E9DFFC626C16A3C00CE3F2D /* Meal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Meal.h; sourceTree = "<group>"; };
+		8E9DFFC726C16A3C00CE3F2D /* UITableViewMealsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UITableViewMealsCell.m; sourceTree = "<group>"; };
+		8E9DFFC826C16A3C00CE3F2D /* UITableViewMealsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UITableViewMealsCell.h; sourceTree = "<group>"; };
+		8E9DFFC926C16A3D00CE3F2D /* Meal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Meal.m; sourceTree = "<group>"; };
+		8E9FD4D026CBB1C000DABC61 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,17 +52,48 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E9FD4D126CBB1C000DABC61 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8E4A872026CD2850001985FA /* DatePickerScreen */ = {
+			isa = PBXGroup;
+			children = (
+				8E0D1A0A26C2CEB20028B5FB /* DatePIckerViewController.h */,
+				8E0D1A0B26C2CEB20028B5FB /* DatePIckerViewController.m */,
+			);
+			path = DatePickerScreen;
+			sourceTree = "<group>";
+		};
+		8E4A872126CD2853001985FA /* MealsTableScreen */ = {
+			isa = PBXGroup;
+			children = (
+				8E951C1C26B921A0006A4950 /* MealsTableViewController.h */,
+				8E951C1D26B921A0006A4950 /* MealsTableViewController.m */,
+				8E9DFFC826C16A3C00CE3F2D /* UITableViewMealsCell.h */,
+				8E9DFFC726C16A3C00CE3F2D /* UITableViewMealsCell.m */,
+			);
+			path = MealsTableScreen;
+			sourceTree = "<group>";
+		};
+		8E4A872226CD2856001985FA /* AddItemScreen */ = {
+			isa = PBXGroup;
+			children = (
+				8E951C3426B938E6006A4950 /* AddItemViewController.h */,
+				8E951C3526B938E6006A4950 /* AddItemViewController.m */,
+			);
+			path = AddItemScreen;
+			sourceTree = "<group>";
+		};
 		8E951C0A26B921A0006A4950 = {
 			isa = PBXGroup;
 			children = (
 				8E951C1526B921A0006A4950 /* SecondTask */,
 				8E951C1426B921A0006A4950 /* Products */,
+				8E9FD4CF26CBB1C000DABC61 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,21 +108,47 @@
 		8E951C1526B921A0006A4950 /* SecondTask */ = {
 			isa = PBXGroup;
 			children = (
+				8E9FD49526CB88AC00DABC61 /* Controllers */,
+				8E9FD49426CB880200DABC61 /* Model */,
 				8E951C1626B921A0006A4950 /* AppDelegate.h */,
 				8E951C1726B921A0006A4950 /* AppDelegate.m */,
 				8E951C1926B921A0006A4950 /* SceneDelegate.h */,
 				8E951C1A26B921A0006A4950 /* SceneDelegate.m */,
-				8E951C1C26B921A0006A4950 /* ViewController.h */,
-				8E951C1D26B921A0006A4950 /* ViewController.m */,
 				8E951C1F26B921A0006A4950 /* Main.storyboard */,
 				8E951C2226B921A9006A4950 /* Assets.xcassets */,
 				8E951C2426B921A9006A4950 /* LaunchScreen.storyboard */,
 				8E951C2726B921A9006A4950 /* Info.plist */,
 				8E951C2826B921A9006A4950 /* main.m */,
-				8E951C3426B938E6006A4950 /* AddItemViewController.h */,
-				8E951C3526B938E6006A4950 /* AddItemViewController.m */,
 			);
 			path = SecondTask;
+			sourceTree = "<group>";
+		};
+		8E9FD49426CB880200DABC61 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8E4A871A26CD23E6001985FA /* MealModel.xcdatamodeld */,
+				8E9DFFC626C16A3C00CE3F2D /* Meal.h */,
+				8E9DFFC926C16A3D00CE3F2D /* Meal.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8E9FD49526CB88AC00DABC61 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8E4A872226CD2856001985FA /* AddItemScreen */,
+				8E4A872126CD2853001985FA /* MealsTableScreen */,
+				8E4A872026CD2850001985FA /* DatePickerScreen */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		8E9FD4CF26CBB1C000DABC61 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8E9FD4D026CBB1C000DABC61 /* CoreData.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -150,9 +220,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E951C1E26B921A0006A4950 /* ViewController.m in Sources */,
+				8E4A871C26CD23E6001985FA /* MealModel.xcdatamodeld in Sources */,
+				8E0D1A0C26C2CEB20028B5FB /* DatePIckerViewController.m in Sources */,
+				8E951C1E26B921A0006A4950 /* MealsTableViewController.m in Sources */,
 				8E951C3626B938E6006A4950 /* AddItemViewController.m in Sources */,
+				8E9DFFCA26C16A3D00CE3F2D /* UITableViewMealsCell.m in Sources */,
 				8E951C1826B921A0006A4950 /* AppDelegate.m in Sources */,
+				8E9DFFCB26C16A3D00CE3F2D /* Meal.m in Sources */,
 				8E951C2926B921A9006A4950 /* main.m in Sources */,
 				8E951C1B26B921A0006A4950 /* SceneDelegate.m in Sources */,
 			);
@@ -350,6 +424,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8E4A871A26CD23E6001985FA /* MealModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8E4A871B26CD23E6001985FA /* MealModel.xcdatamodel */,
+			);
+			currentVersion = 8E4A871B26CD23E6001985FA /* MealModel.xcdatamodel */;
+			path = MealModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8E951C0B26B921A0006A4950 /* Project object */;
 }
