@@ -12,7 +12,7 @@
 #import <CoreData/CoreData.h>
 #import "CoreDataManager.h"
 
-@interface MealsTableViewController () <AddItemViewControllerDelegate, UITableViewDataSource>
+@interface MealsTableViewController () <AddItemViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *mealTable;
 @property NSMutableArray<Meal *> *mealItems;
@@ -28,7 +28,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationController.navigationBar.hidden = NO;
-    [self.mealTable setEditing:NO animated:YES];
     self.mealItems = [[NSMutableArray alloc] init];
     self.mealTypeSections = [[NSArray alloc] initWithObjects:@"Steak", @"Chicken", @"Fish", @"Vegeterian", @"Vegan", nil];
     
@@ -41,6 +40,7 @@
     }
     
     self.mealTable.dataSource = self;
+    self.mealTable.delegate = self;
     
     self.manager = [[CoreDataManager alloc] init];
     self.mealsInSections = [self convertMealEntityToMeal];
@@ -53,7 +53,7 @@
     
     [addItemVC setDelegate:self];
     
-    [self presentViewController:addItemVC animated:YES completion:nil];
+    [self.navigationController pushViewController:addItemVC animated:YES];
 }
 
 - (void)viewControllerDidCancel:(AddItemViewController *)viewController {
@@ -84,7 +84,7 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return tableView.rowHeight;
+    return 80;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

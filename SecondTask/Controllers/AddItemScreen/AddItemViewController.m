@@ -8,6 +8,7 @@
 #import "AddItemViewController.h"
 #import <CoreData/CoreData.h>
 #import "AppDelegate.h"
+#import "ExistingMealsViewController.h"
 
 @interface AddItemViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -46,7 +47,7 @@
 
     [self.delegate addMealToCoreData:self meal:meal];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.navigationController popViewControllerAnimated:YES];
     
 }
 
@@ -85,6 +86,14 @@ numberOfRowsInComponent:(NSInteger)component {
     [pickerViewLabel.centerYAnchor constraintEqualToAnchor:pickerCustomView.centerYAnchor constant:0].active = YES;
     
     return pickerCustomView;
+}
+
+- (IBAction)chooseFromExistingButtonTap:(id)sender {
+    UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    ExistingMealsViewController *existingMealsVC = [storyBoard instantiateViewControllerWithIdentifier:@"ExistingMealsViewController"];
+    existingMealsVC.modalPresentationStyle = UIModalPresentationAutomatic;
+    [self.navigationController pushViewController:existingMealsVC animated:YES];
 }
 
 @end
