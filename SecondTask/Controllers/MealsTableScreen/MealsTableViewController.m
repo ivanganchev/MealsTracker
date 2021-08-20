@@ -20,6 +20,8 @@
 @property NSArray *keys;
 @property NSMutableDictionary *mealsInSections;
 @property CoreDataManager *manager;
+@property UISegmentedControl *segmentedControl;
+@property (weak, nonatomic) IBOutlet UILabel *mealsTitle;
 @end
 
 @implementation MealsTableViewController
@@ -27,6 +29,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Meal Type", @"Day Time"]];
+    self.segmentedControl.selectedSegmentIndex = 0;
+    self.navigationItem.titleView = self.segmentedControl;
+    
     self.navigationController.navigationBar.hidden = NO;
     self.mealItems = [[NSMutableArray alloc] init];
     self.mealTypeSections = [[NSArray alloc] initWithObjects:@"Steak", @"Chicken", @"Fish", @"Vegeterian", @"Vegan", nil];
@@ -92,10 +98,12 @@
     }
     
     if(numOfRowsInSections > 0) {
+        self.mealsTitle.hidden = NO;
         tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         tableView.backgroundView = nil;
         return numOfSections;
     } else {
+        self.mealsTitle.hidden = YES;
         UILabel *noDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
         noDataLabel.text = @"No meals added";
         noDataLabel.textAlignment = NSTextAlignmentCenter;
