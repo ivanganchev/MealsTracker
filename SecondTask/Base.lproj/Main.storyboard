@@ -264,7 +264,7 @@
                         <outlet property="TitleTextField" destination="SmZ-5v-GBn" id="0gd-JD-UVL"/>
                         <outlet property="dayTime" destination="gn9-WT-rIn" id="hhz-w7-xJl"/>
                         <outlet property="mealTypePickerView" destination="xno-d0-agu" id="bIh-FJ-dsX"/>
-                        <outlet property="servingsPerWeek" destination="i5e-Ph-8b6" id="iKU-kY-Med"/>
+                        <outlet property="servingsPerDay" destination="i5e-Ph-8b6" id="iKU-kY-Med"/>
                         <outlet property="titleTextField" destination="SmZ-5v-GBn" id="sLx-PZ-9Fc"/>
                     </connections>
                 </viewController>

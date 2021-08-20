@@ -8,6 +8,7 @@
 #import "ExistingMealsViewController.h"
 #import "UITableViewMealsCell.h"
 #import "CoreDataManager.h"
+#import "Meal.h"
 
 @interface ExistingMealsViewController ()
     <UITableViewDataSource, UITableViewDelegate>
@@ -30,14 +31,17 @@
     
     self.manager = [[CoreDataManager alloc] init];
     
-    self.existingMealsTableView.dataSource = self;
+    self.existingMealsTableView.rowHeight = 80;
     self.existingMealsTableView.delegate = self;
+    self.existingMealsTableView.dataSource = self;
     
     self.defaultMeals = [[NSMutableArray alloc] init];
     
-    for(int i = 0; i < 5; i++) {
-        [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Beef with brocolli" mealType:@"Steak" date:@"" servingsPerDay:1 dayTime:@"Lunch"] atIndex:i];
-    }
+    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Beef with brocolli" mealType:@"Steak" date:@"" servingsPerDay:1 dayTime:@"Lunch"] atIndex:0];
+    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Tuna salad" mealType:@"Fish" date:@"" servingsPerDay:1 dayTime:@"Breakfast"] atIndex:1];
+    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Chicken Pasta" mealType:@"Chicken" date:@"" servingsPerDay:1 dayTime:@"Lunch"] atIndex:2];
+    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Moussaka" mealType:@"Vegan" date:@"" servingsPerDay:1 dayTime:@"Dinner"] atIndex:3];
+    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Banitsa" mealType:@"Vegeterian" date:@"" servingsPerDay:1 dayTime:@"Breakfast"] atIndex:4];
     
     self.mealItems = self.defaultMeals;
 }
@@ -62,10 +66,6 @@
     return self.mealItems.count;
 }
 
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
-}
-
 -(NSMutableArray *)convertMealEntityToMeal{
     NSMutableArray* entities = [self.manager fetchAllEntries:@"MealEntity" ];
     
@@ -88,6 +88,11 @@
     }
     
     [self.existingMealsTableView reloadData];
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self.delegate getExistingMeal:[self.mealItems objectAtIndex:indexPath.row]];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

@@ -12,7 +12,7 @@
 #import <CoreData/CoreData.h>
 #import "CoreDataManager.h"
 
-@interface MealsTableViewController () <AddItemViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface MealsTableViewController () <AddItemViewControllerDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *mealTable;
 @property NSMutableArray<Meal *> *mealItems;
@@ -39,8 +39,8 @@
         [self.mealsInSections setObject:array forKey:key];
     }
     
+    self.mealTable.rowHeight = 80;
     self.mealTable.dataSource = self;
-    self.mealTable.delegate = self;
     
     self.manager = [[CoreDataManager alloc] init];
     self.mealsInSections = [self convertMealEntityToMeal];
@@ -81,10 +81,6 @@
     cell.mealServingsLabel.text = [NSString stringWithFormat:@"%ld", meal.servingsPerDay];
                                        
     return cell;
-}
-
--(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

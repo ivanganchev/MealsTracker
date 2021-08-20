@@ -10,14 +10,15 @@
 #import "AppDelegate.h"
 #import "ExistingMealsViewController.h"
 
-@interface AddItemViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface AddItemViewController () <UIPickerViewDataSource, UIPickerViewDelegate, ExistingMealsViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UIPickerView *mealTypePickerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *dayTime;
-@property (weak, nonatomic) IBOutlet UITextField *servingsPerWeek;
+@property (weak, nonatomic) IBOutlet UITextField *servingsPerDay;
 @property NSArray *mealTypes;
 @property NSArray *mealTypesIcons;
+@property NSArray *dayTimeTypes;
 @end
 
 @implementation AddItemViewController
@@ -27,6 +28,8 @@
     self.mealTypes = [NSArray arrayWithObjects:@"Steak", @"Chicken", @"Fish", @"Vegeterian", @"Vegan", nil];
     
     self.mealTypesIcons = [NSArray arrayWithObjects:@"steak", @"chicken", @"fish", @"vegetarian", @"vegan", nil];
+    
+    self.dayTimeTypes = [NSArray arrayWithObjects:@"Breakfast", @"Lunch", @"Dinner", nil];
     
     self.mealTypePickerView.dataSource = self;
     self.mealTypePickerView.delegate = self;
@@ -43,7 +46,7 @@
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
     
-    Meal *meal = [[Meal alloc] initWithTitle:self.titleTextField.text mealType:self.mealTypes[row] date:@"today" servingsPerDay:  [self.servingsPerWeek.text intValue] dayTime: [self.dayTime titleForSegmentAtIndex:[self.dayTime selectedSegmentIndex]]];
+    Meal *meal = [[Meal alloc] initWithTitle:self.titleTextField.text mealType:self.mealTypes[row] date:@"today" servingsPerDay:  [self.servingsPerDay.text intValue] dayTime: [self.dayTime titleForSegmentAtIndex:[self.dayTime selectedSegmentIndex]]];
 
     [self.delegate addMealToCoreData:self meal:meal];
     
@@ -93,7 +96,15 @@ numberOfRowsInComponent:(NSInteger)component {
     
     ExistingMealsViewController *existingMealsVC = [storyBoard instantiateViewControllerWithIdentifier:@"ExistingMealsViewController"];
     existingMealsVC.modalPresentationStyle = UIModalPresentationAutomatic;
+    existingMealsVC.delegate = self;
     [self.navigationController pushViewController:existingMealsVC animated:YES];
+}
+
+-(void)getExistingMeal:(Meal *)meal {
+    self.titleTextField.text = meal.title;
+    [self.mealTypePickerView selectRow:[self.mealTypes indexOfObject:meal.mealType] inComponent:0 animated:YES];
+    [self.dayTime setSelectedSegmentIndex: [self.dayTimeTypes indexOfObject:meal.dayTime]];
+    self.servingsPerDay.text = [NSString stringWithFormat:@"%ld", meal.servingsPerDay];
 }
 
 @end
