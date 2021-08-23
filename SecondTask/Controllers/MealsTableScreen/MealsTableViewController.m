@@ -17,11 +17,12 @@
 @property (weak, nonatomic) IBOutlet UITableView *mealTable;
 @property NSMutableArray<Meal *> *mealItems;
 @property NSArray<NSString *> *mealTypeSections;
-@property NSArray *keys;
 @property NSMutableDictionary *mealsInSections;
 @property CoreDataManager *manager;
 @property UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UILabel *mealsTitle;
+@property NSArray *dayTimeSections;
+@property NSArray *sections;
 @end
 
 @implementation MealsTableViewController
@@ -31,19 +32,16 @@
     [super viewDidLoad];
     self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Meal Type", @"Day Time"]];
     self.segmentedControl.selectedSegmentIndex = 0;
+    [self.segmentedControl addTarget: self action:@selector(segmentedControlIndexChanged:) forControlEvents:UIControlEventValueChanged];
     self.navigationItem.titleView = self.segmentedControl;
     
     self.navigationController.navigationBar.hidden = NO;
     self.mealItems = [[NSMutableArray alloc] init];
     self.mealTypeSections = [[NSArray alloc] initWithObjects:@"Steak", @"Chicken", @"Fish", @"Vegeterian", @"Vegan", nil];
+    self.sections = [[NSArray alloc] initWithArray:self.mealTypeSections];
+    self.dayTimeSections = [[NSArray alloc] initWithObjects:@"Breakfast", @"Lunch", @"Dinner", nil];
     
-    self.keys = [NSArray arrayWithObjects:@"Steak", @"Chicken", @"Fish", @"Vegeterian", @"Vegan", nil];
-    self.mealsInSections = [NSMutableDictionary dictionaryWithCapacity:[self.keys count]];
-    
-    for(id key in self.keys) {
-        NSMutableArray *array = [NSMutableArray array];
-        [self.mealsInSections setObject:array forKey:key];
-    }
+    [self setMealsDictionary];
     
     self.mealTable.rowHeight = 80;
     self.mealTable.dataSource = self;
@@ -79,7 +77,7 @@
         cell = [[UITableViewMealsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewMealsCellId"];
     }
     
-    NSArray *meals = [self.mealsInSections objectForKey:self.keys[indexPath.section]];
+    NSArray *meals = [self.mealsInSections objectForKey:self.sections[indexPath.section]];
     
     Meal *meal = [meals objectAtIndex:indexPath.row];
     
@@ -90,9 +88,9 @@
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger numOfSections = self.mealTypeSections.count;
+    NSInteger numOfSections = self.sections.count;
     NSInteger numOfRowsInSections = 0;
-    for(id key in self.keys) {
+    for(id key in self.sections) {
         NSArray *a = [self.mealsInSections objectForKey:key];
         numOfRowsInSections += a.count;
     }
@@ -101,7 +99,6 @@
         self.mealsTitle.hidden = NO;
         tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         tableView.backgroundView = nil;
-        return numOfSections;
     } else {
         self.mealsTitle.hidden = YES;
         UILabel *noDataLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height)];
@@ -109,14 +106,15 @@
         noDataLabel.textAlignment = NSTextAlignmentCenter;
         tableView.backgroundView = noDataLabel;
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        return numOfSections;
     }
+    
+    return numOfSections;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    NSString *mealType = [self.mealTypeSections objectAtIndex:section];
+    NSString *sectionType = [self.sections objectAtIndex:section];
     
-    NSMutableArray *tempArr = [self.mealsInSections objectForKey:mealType];
+    NSMutableArray *tempArr = [self.mealsInSections objectForKey:sectionType];
     
     return tempArr.count;
 }
@@ -125,9 +123,9 @@
     
     if ([tableView.dataSource tableView:tableView numberOfRowsInSection:section] == 0) {
             return nil;
-        }
+    }
     
-    return [self.mealTypeSections objectAtIndex:section];
+    return [self.sections objectAtIndex:section];
  }
 
 - (IBAction)navigateToPreviousViewController:(id)sender {
@@ -144,15 +142,20 @@
         [newArray addObject:m];
     }
     
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:[self.keys count]];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:[self.sections count]];
     
-    for(id key in self.keys) {
+    for(id key in self.sections) {
         NSMutableArray *array = [NSMutableArray array];
         [dict setObject:array forKey:key];
     }
     
     for(Meal *item in newArray) {
-        [dict[item.mealType] addObject:item];
+        if(self.sections.count == self.mealTypeSections.count) {
+            [dict[item.mealType] addObject:item];
+        } else {
+            [dict[item.dayTime] addObject:item];
+        }
+        
     }
     
     return dict;
@@ -164,11 +167,33 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSMutableArray<Meal*> *tempArr = [self.mealsInSections objectForKey:self.keys[indexPath.section]];
+        NSMutableArray<Meal*> *tempArr = [self.mealsInSections objectForKey:self.sections[indexPath.section]];
         [self.manager removeEntryById:tempArr[indexPath.row].identificaiton entityName:@"MealEntity"];
         self.mealsInSections = [self convertMealEntityToMeal];
         
         [self.mealTable reloadData];
+    }
+}
+
+
+-(void)segmentedControlIndexChanged:(id)sender {
+    if(self.segmentedControl.selectedSegmentIndex == 0){
+        self.sections = self.mealTypeSections;
+    } else {
+        self.sections = self.dayTimeSections;
+    }
+    
+    [self setMealsDictionary];
+    self.mealsInSections = [self convertMealEntityToMeal];
+    [self.mealTable reloadData];
+}
+
+-(void)setMealsDictionary {
+    self.mealsInSections = [NSMutableDictionary dictionaryWithCapacity:[self.sections count]];
+    
+    for(id key in self.sections) {
+        NSMutableArray *array = [NSMutableArray array];
+        [self.mealsInSections setObject:array forKey:key];
     }
 }
 
