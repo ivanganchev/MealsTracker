@@ -11,8 +11,9 @@
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 #import "CoreDataManager.h"
+#import "EditMealViewController.h"
 
-@interface MealsTableViewController () <AddItemViewControllerDelegate, UITableViewDataSource>
+@interface MealsTableViewController () <AddItemViewControllerDelegate, UITableViewDataSource, UITableViewDelegate, EditMealViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *mealTable;
 @property NSMutableArray<Meal *> *mealItems;
@@ -45,6 +46,7 @@
     
     self.mealTable.rowHeight = 80;
     self.mealTable.dataSource = self;
+    self.mealTable.delegate = self;
     
     self.manager = [[CoreDataManager alloc] init];
     self.mealsInSections = [self convertMealEntityToMeal];
@@ -166,15 +168,34 @@
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        NSMutableArray<Meal*> *tempArr = [self.mealsInSections objectForKey:self.sections[indexPath.section]];
-        [self.manager removeEntryById:tempArr[indexPath.row].identificaiton entityName:@"MealEntity"];
-        self.mealsInSections = [self convertMealEntityToMeal];
-        
-        [self.mealTable reloadData];
-    }
 }
 
+-(UISwipeActionsConfiguration *)tableView:(UITableView *)tableView
+trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath;{
+    UIContextualAction *editAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Edit" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        
+        EditMealViewController *editMealVC = [storyBoard instantiateViewControllerWithIdentifier:@"EditMealViewController"];
+        NSArray *mealsBySection = self.mealsInSections[self.mealTypeSections[indexPath.section]];
+        editMealVC.meal = [mealsBySection objectAtIndex:indexPath.row];
+        editMealVC.delegate = self;
+        [self presentViewController:editMealVC animated:YES completion:nil];
+        
+    }];
+    editAction.backgroundColor = [UIColor lightGrayColor];
+
+    UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+            NSMutableArray<Meal*> *tempArr = [self.mealsInSections objectForKey:self.sections[indexPath.section]];
+            [self.manager removeEntryById:tempArr[indexPath.row].identificaiton entityName:@"MealEntity"];
+            self.mealsInSections = [self convertMealEntityToMeal];
+            [self.mealTable reloadData];
+    }];
+    deleteAction.backgroundColor = [UIColor redColor];
+    
+    UISwipeActionsConfiguration *swipeActionConfig = [UISwipeActionsConfiguration configurationWithActions:@[deleteAction,editAction]];
+    
+    return swipeActionConfig;
+}
 
 -(void)segmentedControlIndexChanged:(id)sender {
     if(self.segmentedControl.selectedSegmentIndex == 0){
@@ -195,6 +216,11 @@
         NSMutableArray *array = [NSMutableArray array];
         [self.mealsInSections setObject:array forKey:key];
     }
+}
+
+-(void)getEditedMeal:(Meal *)meal {
+    [self.manager updateEntryById:meal.identificaiton entityName:@"MealEntity" meal:meal];
+    [self.mealTable reloadData];
 }
 
 @end

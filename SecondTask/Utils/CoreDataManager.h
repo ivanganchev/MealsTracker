@@ -22,6 +22,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)removeEntryById:(NSUUID *)identification entityName:(NSString *)entityName;
 -(NSMutableArray*)fetchAllEntries:(NSString *)entityName;
 -(NSMutableArray*)fetchEntriesByDate:(NSString *)entityName date:(NSString *)date;
+-(void)updateEntryById:(NSUUID *)identification entityName:(NSString *)entityName
+    meal:(Meal *)meal;
 @end
 
 

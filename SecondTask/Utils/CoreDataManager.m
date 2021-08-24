@@ -48,7 +48,7 @@
     
 }
 
--(NSMutableArray*)fetchAllEntries:(NSString *)entityName{
+-(NSMutableArray*)fetchAllEntries:(NSString *)entityName {
     NSFetchRequest *requestMeals = [NSFetchRequest fetchRequestWithEntityName:entityName];
     return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:nil]];
 }
@@ -64,5 +64,28 @@
     NSMutableArray *items = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:&error]];
     
     return items;
+}
+
+-(void)updateEntryById:(NSUUID *)identification
+            entityName:(NSString *)entityName
+                  meal:(Meal *)meal{
+    NSFetchRequest *requestMeals = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    NSEntityDescription *mealEntityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.context];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identification == %@", identification];
+    
+    [requestMeals setEntity:mealEntityDescription];
+    [requestMeals setPredicate:predicate];
+    [requestMeals setFetchLimit:1];
+    
+    NSError *error;
+    NSMutableArray *items = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:&error]];
+    
+    MealEntity *e = items[0];
+    e.title = meal.title;
+    e.mealType = meal.mealType;
+    e.dayTime = meal.dayTime;
+    e.servingsPerDay = meal.servingsPerDay;
+    
+    [self.appDelegate saveContext];
 }
 @end
