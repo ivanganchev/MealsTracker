@@ -11,6 +11,7 @@
 #import "ExistingMealsViewController.h"
 #import "MealTypeView.h"
 #import "MealsUIResources.h"
+#import "SuggestionNotificationButton.h"
 
 @interface AddItemViewController () <UIPickerViewDataSource, UIPickerViewDelegate, ExistingMealsViewControllerDelegate>
 
@@ -20,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *servingsPerDay;
 @property MealsUIResources *mealsRes;
 @property NSArray *dayTimeTypes;
+@property SuggestionNotificationButton *suggestionButton;
 @end
 
 @implementation AddItemViewController
@@ -31,6 +33,14 @@
     
     self.mealTypePickerView.dataSource = self;
     self.mealTypePickerView.delegate = self;
+    
+    self.suggestionButton = [[SuggestionNotificationButton alloc] initButton];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithCustomView:self.suggestionButton];
+    self.navigationItem.rightBarButtonItem = rightButton;
+    
+    [self.suggestionButton addTarget:self
+                              action:@selector(suggestionButtonTap)
+       forControlEvents:UIControlEventTouchUpInside];
 }
 
 -(IBAction)cancel:(id)sender {
@@ -91,6 +101,10 @@ numberOfRowsInComponent:(NSInteger)component {
     [self.mealTypePickerView selectRow:index inComponent:0 animated:YES];
     [self.dayTime setSelectedSegmentIndex: [self.dayTimeTypes indexOfObject:meal.dayTime]];
     self.servingsPerDay.text = [NSString stringWithFormat:@"%ld", meal.servingsPerDay];
+}
+
+-(void)suggestionButtonTap {
+    
 }
 
 @end
