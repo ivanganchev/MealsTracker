@@ -37,7 +37,6 @@
     self.suggestionButton = [[SuggestionNotificationButton alloc] initButton];
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithCustomView:self.suggestionButton];
     self.navigationItem.rightBarButtonItem = rightButton;
-    
     [self.suggestionButton addTarget:self
                               action:@selector(suggestionButtonTap)
        forControlEvents:UIControlEventTouchUpInside];

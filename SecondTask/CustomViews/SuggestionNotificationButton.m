@@ -30,13 +30,15 @@
 -(void)disableButton {
     [self setUserInteractionEnabled: NO];
     [self setAlpha:0.3f];
-    [self setBackgroundColor:[UIColor grayColor]];
+    [self setTintColor:[UIColor grayColor]];
+    [self.subviews setValue:@YES forKeyPath:@"hidden"];
 }
 
 -(void)enableButton {
     [self setUserInteractionEnabled: YES];
     [self setAlpha:1.0f];
-    [self setBackgroundColor:[UIColor systemBlueColor]];
+    [self setTintColor:[UIColor systemBlueColor]];
+    [self.subviews setValue:@NO forKeyPath:@"hidden"];
 }
 
 @end
