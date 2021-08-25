@@ -88,4 +88,17 @@
     
     [self.appDelegate saveContext];
 }
+
+-(NSMutableArray *)fetchAllEntriesExcept:(NSString *)entityName mealType:(NSString *)mealType {
+    NSFetchRequest *requestMeals = [NSFetchRequest fetchRequestWithEntityName:entityName];
+    NSEntityDescription *mealEntityDescription = [NSEntityDescription entityForName:entityName inManagedObjectContext:self.context];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"NOT (mealType CONTAINS %@)", mealType];
+    [requestMeals setEntity:mealEntityDescription];
+    [requestMeals setPredicate:predicate];
+
+    NSError *error;
+    NSMutableArray *items = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:&error]];
+    
+    return items;
+}
 @end

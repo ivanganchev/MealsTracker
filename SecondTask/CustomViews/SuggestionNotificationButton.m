@@ -27,17 +27,11 @@
     return self;
 }
 
--(void)disableButton {
-    [self setUserInteractionEnabled: NO];
-    [self setAlpha:0.3f];
-    [self setTintColor:[UIColor grayColor]];
+-(void)disableRedDot {
     [self.subviews setValue:@YES forKeyPath:@"hidden"];
 }
 
--(void)enableButton {
-    [self setUserInteractionEnabled: YES];
-    [self setAlpha:1.0f];
-    [self setTintColor:[UIColor systemBlueColor]];
+-(void)enableRedDot {
     [self.subviews setValue:@NO forKeyPath:@"hidden"];
 }
 

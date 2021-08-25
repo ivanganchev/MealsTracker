@@ -12,8 +12,10 @@
 #import "MealTypeView.h"
 #import "MealsUIResources.h"
 #import "SuggestionNotificationButton.h"
+#import "MealSuggestionsTableViewController.h"
+#import "CoreDataManager.h"
 
-@interface AddItemViewController () <UIPickerViewDataSource, UIPickerViewDelegate, ExistingMealsViewControllerDelegate>
+@interface AddItemViewController () <UIPickerViewDataSource, UIPickerViewDelegate, ExistingMealsViewControllerDelegate, MealSuggestionsTableViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UIPickerView *mealTypePickerView;
@@ -22,12 +24,16 @@
 @property MealsUIResources *mealsRes;
 @property NSArray *dayTimeTypes;
 @property SuggestionNotificationButton *suggestionButton;
+@property CoreDataManager *manager;
+@property BOOL isSuggestionButtonSuggesting;
+@property NSString *mostCommonMealType;
 @end
 
 @implementation AddItemViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+self.mostCommonMealType = @"";
     self.mealsRes = [[MealsUIResources alloc] initMealTypes];
     self.dayTimeTypes = [NSArray arrayWithObjects:@"Breakfast", @"Lunch", @"Dinner", nil];
     
@@ -40,6 +46,10 @@
     [self.suggestionButton addTarget:self
                               action:@selector(suggestionButtonTap)
        forControlEvents:UIControlEventTouchUpInside];
+    
+    self.manager = [[CoreDataManager alloc] init];
+    [self setSuggestionButtonUsability];
+    
 }
 
 -(IBAction)cancel:(id)sender {
@@ -103,7 +113,77 @@ numberOfRowsInComponent:(NSInteger)component {
 }
 
 -(void)suggestionButtonTap {
+    NSString *alertText = @"";
+    NSMutableArray *actions = [[NSMutableArray alloc] init];
+    if(self.isSuggestionButtonSuggesting == NO) {
+        alertText =@"You've eaten pretty good, you don't need any suggestions.";
+    } else {
+        alertText = [NSString stringWithFormat:@"You've eaten almost only %@, do you need suggested something else?", [self.mostCommonMealType lowercaseString]];
+        UIAlertAction *showAction = [UIAlertAction actionWithTitle:@"Show me" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            
+            MealSuggestionsTableViewController *mealSuggestionsVC = [storyBoard instantiateViewControllerWithIdentifier:@"MealSuggestionsTableViewControllerId"];
+            mealSuggestionsVC.mealTypeException = self.mostCommonMealType;
+            mealSuggestionsVC.delegate = self;
+            [self presentViewController:mealSuggestionsVC animated:YES completion:nil];
+        }];
+        [actions addObject:showAction];
+    }
     
+    UIAlertController *suggestionAlert = [UIAlertController alertControllerWithTitle:@"Suggestion" message:alertText preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    [actions addObject:cancelAction];
+
+    for(UIAlertAction *action in actions) {
+        [suggestionAlert addAction:action];
+    }
+ 
+    [self presentViewController:suggestionAlert animated:YES completion:nil];
+}
+
+-(void)setSuggestionButtonUsability{
+    NSArray *allEntities = [self.manager fetchAllEntries:@"MealEntity"];
+    
+    int highestMealTypeCount = 0;
+    int currentMealTypeCount = 0;
+    int mealDifference = 7;
+    
+    for(MealType *m in self.mealsRes.mealsTypes) {
+        for(MealEntity *e in allEntities) {
+            if([e.mealType isEqual:m.mealTypeName]) {
+                currentMealTypeCount++;
+            }
+        }
+        if(currentMealTypeCount - highestMealTypeCount >= mealDifference) {
+            highestMealTypeCount = currentMealTypeCount;
+            self.mostCommonMealType = m.mealTypeName;
+        }
+        currentMealTypeCount = 0;   
+    }
+    
+    if([self.mostCommonMealType isEqual:@""]) {
+        self.isSuggestionButtonSuggesting = NO;
+        [self.suggestionButton disableRedDot];
+    } else {
+        self.isSuggestionButtonSuggesting = YES;
+        [self.suggestionButton enableRedDot];
+    }
+    
+}
+
+-(void)getSuggestedMeal:(Meal *)meal {
+    self.titleTextField.text = meal.title;
+    int index = 0;
+    for(int i = 0; i < self.mealsRes.mealsTypes.count; i++) {
+        if([self.mealsRes.mealsTypes[i].mealTypeName isEqual:meal.mealType]) {
+            index = i;
+            break;
+        }
+    }
+    [self.mealTypePickerView selectRow:index inComponent:0 animated:YES];
+    [self.dayTime setSelectedSegmentIndex: [self.dayTimeTypes indexOfObject:meal.dayTime]];
+    self.servingsPerDay.text = [NSString stringWithFormat:@"%ld", meal.servingsPerDay];
 }
 
 @end

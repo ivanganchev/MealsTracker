@@ -11,8 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface SuggestionNotificationButton : UIButton
 -(instancetype)initButton;
--(void)disableButton;
--(void)enableButton;
+-(void)disableRedDot;
+-(void)enableRedDot;
 @end
 
 NS_ASSUME_NONNULL_END

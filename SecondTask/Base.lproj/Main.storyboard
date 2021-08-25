@@ -465,7 +465,79 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FTT-IK-jsL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-7" y="-1019"/>
+            <point key="canvasLocation" x="-409" y="-1000"/>
+        </scene>
+        <!--Meal Suggestions Table View Controller-->
+        <scene sceneID="XE0-Ej-2Ke">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eZb-GF-4Np" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewController storyboardIdentifier="MealSuggestionsTableViewControllerId" id="zAP-WT-ZT5" customClass="MealSuggestionsTableViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3sl-nW-jK2">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0wb-ME-Ode">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UITableViewMealsCellId" rowHeight="80" id="EsX-mv-0cP" customClass="UITableViewMealsCell">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EsX-mv-0cP" id="KV8-Vz-f8S">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meal Servings: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w01-VI-b9c">
+                                                    <rect key="frame" x="11" y="47.5" width="105" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" systemColor="systemGray3Color"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XAe-6e-lPS">
+                                                    <rect key="frame" x="116" y="47" width="37.5" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" systemColor="systemGray3Color"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFe-Nr-3zo">
+                                                    <rect key="frame" x="11" y="11" width="61.5" height="31.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="mFe-Nr-3zo" firstAttribute="leading" secondItem="KV8-Vz-f8S" secondAttribute="leading" constant="11" id="3xz-bu-Uvf"/>
+                                                <constraint firstAttribute="bottom" secondItem="w01-VI-b9c" secondAttribute="bottom" constant="14.5" id="8Gf-Vj-lgg"/>
+                                                <constraint firstItem="w01-VI-b9c" firstAttribute="leading" secondItem="KV8-Vz-f8S" secondAttribute="leading" constant="11" id="Wrf-gt-btJ"/>
+                                                <constraint firstItem="XAe-6e-lPS" firstAttribute="leading" secondItem="w01-VI-b9c" secondAttribute="trailing" id="hbJ-EL-gb3"/>
+                                                <constraint firstItem="mFe-Nr-3zo" firstAttribute="top" secondItem="KV8-Vz-f8S" secondAttribute="top" constant="11" id="lde-O3-osf"/>
+                                                <constraint firstItem="XAe-6e-lPS" firstAttribute="top" secondItem="KV8-Vz-f8S" secondAttribute="top" constant="47" id="sCK-Lq-cX7"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="mealServingsLabel" destination="XAe-6e-lPS" id="d15-Ng-2PI"/>
+                                            <outlet property="mealTitleLabel" destination="mFe-Nr-3zo" id="M7i-yF-8J9"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="o6e-rl-czr"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="0wb-ME-Ode" firstAttribute="top" secondItem="o6e-rl-czr" secondAttribute="top" id="MTr-Tk-iUN"/>
+                            <constraint firstItem="o6e-rl-czr" firstAttribute="trailing" secondItem="0wb-ME-Ode" secondAttribute="trailing" id="U5J-yh-GnE"/>
+                            <constraint firstItem="0wb-ME-Ode" firstAttribute="leading" secondItem="o6e-rl-czr" secondAttribute="leading" id="YGa-DY-BeH"/>
+                            <constraint firstItem="o6e-rl-czr" firstAttribute="bottom" secondItem="0wb-ME-Ode" secondAttribute="bottom" id="cyj-v2-sWx"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mealSuggestionTableView" destination="0wb-ME-Ode" id="3Ja-ut-otd"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="428.98550724637687" y="-1000.4464285714286"/>
         </scene>
     </scenes>
     <resources>

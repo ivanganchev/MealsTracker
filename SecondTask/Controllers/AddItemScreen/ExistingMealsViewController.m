@@ -9,6 +9,7 @@
 #import "UITableViewMealsCell.h"
 #import "CoreDataManager.h"
 #import "Meal.h"
+#import "DefaultMealsProvider.h"
 
 @interface ExistingMealsViewController ()
     <UITableViewDataSource, UITableViewDelegate>
@@ -34,14 +35,8 @@
     self.existingMealsTableView.rowHeight = 80;
     self.existingMealsTableView.delegate = self;
     self.existingMealsTableView.dataSource = self;
-    
-    self.defaultMeals = [[NSMutableArray alloc] init];
-    
-    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Beef with brocolli" mealType:@"Steak" date:@"" servingsPerDay:1 dayTime:@"Lunch"] atIndex:0];
-    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Tuna salad" mealType:@"Fish" date:@"" servingsPerDay:1 dayTime:@"Breakfast"] atIndex:1];
-    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Chicken Pasta" mealType:@"Chicken" date:@"" servingsPerDay:1 dayTime:@"Lunch"] atIndex:2];
-    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Moussaka" mealType:@"Vegan" date:@"" servingsPerDay:1 dayTime:@"Dinner"] atIndex:3];
-    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Banitsa" mealType:@"Vegeterian" date:@"" servingsPerDay:1 dayTime:@"Breakfast"] atIndex:4];
+    DefaultMealsProvider *provider = [[DefaultMealsProvider alloc]initDefaultMeals];
+    self.defaultMeals = [provider getDefaultMeals];
     
     self.mealItems = self.defaultMeals;
 }
@@ -80,7 +75,6 @@
 
 -(void)segmentedControlIndexChanged:(id)sender {
     if(self.segmentedControl.selectedSegmentIndex == 0) {
-        
         self.mealItems = self.defaultMeals;
         
     } else {
