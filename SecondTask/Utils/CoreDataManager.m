@@ -6,6 +6,7 @@
 //
 
 #import "CoreDataManager.h"
+#import "Meal.h"
 
 @implementation CoreDataManager
 
@@ -50,7 +51,7 @@
 
 -(NSMutableArray*)fetchAllEntries:(NSString *)entityName {
     NSFetchRequest *requestMeals = [NSFetchRequest fetchRequestWithEntityName:entityName];
-    return [NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:nil]];
+    return [self convertMealEntityArrayToMealArray:[NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:nil]]];
 }
 
 -(NSMutableArray*)fetchEntriesByDate:(NSString *)entityName date:(NSString *)date {
@@ -61,7 +62,7 @@
     [requestMeals setPredicate:predicate];
 
     NSError *error;
-    NSMutableArray *items = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:&error]];
+    NSMutableArray *items = [self convertMealEntityArrayToMealArray:[NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:&error]]];
     
     return items;
 }
@@ -97,8 +98,19 @@
     [requestMeals setPredicate:predicate];
 
     NSError *error;
-    NSMutableArray *items = [NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:&error]];
+    NSMutableArray *items = [self convertMealEntityArrayToMealArray:[NSMutableArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:&error]]];
+    
     
     return items;
+}
+
+-(NSMutableArray*)convertMealEntityArrayToMealArray:(NSMutableArray *)array {
+    NSMutableArray<Meal*>* newArray = [[NSMutableArray alloc] init];
+    for(MealEntity *e in array) {
+        Meal* m = [[Meal alloc] initWithEntityObject:e];
+        [newArray addObject:m];
+    }
+    
+    return newArray;
 }
 @end

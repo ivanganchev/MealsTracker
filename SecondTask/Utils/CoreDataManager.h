@@ -26,6 +26,7 @@ NS_ASSUME_NONNULL_BEGIN
     meal:(Meal *)meal;
 -(NSMutableArray*)fetchAllEntriesExcept:(NSString *)entityName
                                mealType:(NSString *)mealType;
+-(NSMutableArray*)convertMealEntityArrayToMealArray:(NSMutableArray *)array;
 @end
 
 

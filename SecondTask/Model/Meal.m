@@ -35,4 +35,14 @@
     return self;
 }
 
+- (BOOL)isEqual:(Meal*)meal
+{
+    return [self.title isEqual:meal.title];
+}
+
+- (NSUInteger)hash
+{
+    return [self.title hash];
+}
+
 @end

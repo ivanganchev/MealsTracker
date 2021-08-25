@@ -57,20 +57,13 @@
 }
 
 - (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return self.mealItems.count;
 }
 
--(NSMutableArray *)convertMealEntityToMeal{
-    NSMutableArray* entities = [self.manager fetchAllEntries:@"MealEntity" ];
-    
-    NSMutableArray<Meal*>* newArray = [[NSMutableArray alloc] init];
-    for(MealEntity *e in entities) {
-        Meal* m = [[Meal alloc] initWithEntityObject:e];
-        [newArray addObject:m];
-    }
-    
-    return newArray;
+-(NSMutableArray *)fillMealsArrayWithUniqueValues{
+    NSMutableSet<Meal *> *uniqueMeals = [[NSMutableSet alloc] initWithArray:[self.manager fetchAllEntries:@"MealEntity"]];
+    NSMutableArray *meals = [NSMutableArray arrayWithArray:[uniqueMeals allObjects]];
+    return meals;
 }
 
 -(void)segmentedControlIndexChanged:(id)sender {
@@ -78,7 +71,7 @@
         self.mealItems = self.defaultMeals;
         
     } else {
-        self.mealItems = [self convertMealEntityToMeal];
+        self.mealItems = [self fillMealsArrayWithUniqueValues];
     }
     
     [self.existingMealsTableView reloadData];

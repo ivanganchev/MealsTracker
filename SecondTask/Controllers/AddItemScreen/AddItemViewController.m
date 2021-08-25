@@ -27,13 +27,16 @@
 @property CoreDataManager *manager;
 @property BOOL isSuggestionButtonSuggesting;
 @property NSString *mostCommonMealType;
+@property int highestMealTypeCount;
 @end
 
 @implementation AddItemViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-self.mostCommonMealType = @"";
+    self.mostCommonMealType = @"";
+    self.highestMealTypeCount = 0;
+    
     self.mealsRes = [[MealsUIResources alloc] initMealTypes];
     self.dayTimeTypes = [NSArray arrayWithObjects:@"Breakfast", @"Lunch", @"Dinner", nil];
     
@@ -145,7 +148,6 @@ numberOfRowsInComponent:(NSInteger)component {
 -(void)setSuggestionButtonUsability{
     NSArray *allEntities = [self.manager fetchAllEntries:@"MealEntity"];
     
-    int highestMealTypeCount = 0;
     int currentMealTypeCount = 0;
     int mealDifference = 7;
     
@@ -155,8 +157,8 @@ numberOfRowsInComponent:(NSInteger)component {
                 currentMealTypeCount++;
             }
         }
-        if(currentMealTypeCount - highestMealTypeCount >= mealDifference) {
-            highestMealTypeCount = currentMealTypeCount;
+        if(currentMealTypeCount - self.highestMealTypeCount >= mealDifference) {
+            self.highestMealTypeCount = currentMealTypeCount;
             self.mostCommonMealType = m.mealTypeName;
         }
         currentMealTypeCount = 0;   
@@ -184,6 +186,10 @@ numberOfRowsInComponent:(NSInteger)component {
     [self.mealTypePickerView selectRow:index inComponent:0 animated:YES];
     [self.dayTime setSelectedSegmentIndex: [self.dayTimeTypes indexOfObject:meal.dayTime]];
     self.servingsPerDay.text = [NSString stringWithFormat:@"%ld", meal.servingsPerDay];
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    [self setSuggestionButtonUsability];
 }
 
 @end

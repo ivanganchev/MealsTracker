@@ -30,7 +30,8 @@
     self.manager = [[CoreDataManager alloc] init];
     DefaultMealsProvider *provider = [[DefaultMealsProvider alloc] initDefaultMeals];
     self.mealItems = [provider getFilteredDefaultMeals:self.mealTypeException];
-    self.mealItems = [[self.mealItems arrayByAddingObjectsFromArray:[self convertMealEntityToMeal]]mutableCopy];
+    self.mealItems = [[self.mealItems arrayByAddingObjectsFromArray:[self fillMealArray]]mutableCopy];
+    self.mealItems = [[[[NSMutableSet alloc] initWithArray:self.mealItems] allObjects] mutableCopy];
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
@@ -52,16 +53,10 @@
     return self.mealItems.count;
 }
 
--(NSMutableArray *)convertMealEntityToMeal{
-    NSMutableArray* entities = [[NSMutableArray alloc] initWithArray:[self.manager fetchAllEntriesExcept:@"MealEntity" mealType:self.mealTypeException]];
-    
-    NSMutableArray<Meal*>* newArray = [[NSMutableArray alloc] init];
-    for(MealEntity *e in entities) {
-        Meal* m = [[Meal alloc] initWithEntityObject:e];
-        [newArray addObject:m];
-    }
-    
-    return newArray;
+-(NSMutableArray *)fillMealArray{
+    NSMutableSet<Meal *> *uniqueMeals = [[NSMutableSet alloc] initWithArray:[self.manager fetchAllEntriesExcept:@"MealEntity" mealType:self.mealTypeException]];
+    NSMutableArray *meals = [NSMutableArray arrayWithArray:[uniqueMeals allObjects]];
+    return meals;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

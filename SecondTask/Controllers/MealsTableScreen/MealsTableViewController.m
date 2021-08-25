@@ -49,7 +49,7 @@
     self.mealTable.delegate = self;
     
     self.manager = [[CoreDataManager alloc] init];
-    self.mealsInSections = [self convertMealEntityToMeal];
+    self.mealsInSections = [self fillMealsDictWithArray];
 }
 
 - (IBAction)addMeal:(id)sender {
@@ -68,7 +68,7 @@
 - (void)addMealToCoreData:(AddItemViewController *)viewController meal:(nonnull Meal *)meal{
     meal.date = self.date1;
     [self.manager addMealEntityEntry:meal];
-    self.mealsInSections = [self convertMealEntityToMeal];
+    self.mealsInSections = [self fillMealsDictWithArray];
     [self.mealTable reloadData];
 }
 
@@ -134,15 +134,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(NSMutableDictionary*) convertMealEntityToMeal {
+-(NSMutableDictionary*) fillMealsDictWithArray {
     
-    NSMutableArray* entities = [self.manager fetchEntriesByDate:@"MealEntity" date:self.date1];
-    
-    NSMutableArray<Meal*>* newArray = [[NSMutableArray alloc] init];
-    for(MealEntity *e in entities) {
-        Meal* m = [[Meal alloc] initWithEntityObject:e];
-        [newArray addObject:m];
-    }
+    NSMutableArray* meals = [self.manager fetchEntriesByDate:@"MealEntity" date:self.date1];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:[self.sections count]];
     
@@ -151,13 +145,12 @@
         [dict setObject:array forKey:key];
     }
     
-    for(Meal *item in newArray) {
+    for(Meal *item in meals) {
         if(self.sections.count == self.mealTypeSections.count) {
             [dict[item.mealType] addObject:item];
         } else {
             [dict[item.dayTime] addObject:item];
         }
-        
     }
     
     return dict;
@@ -187,7 +180,7 @@ trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath;{
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             NSMutableArray<Meal*> *tempArr = [self.mealsInSections objectForKey:self.sections[indexPath.section]];
             [self.manager removeEntryById:tempArr[indexPath.row].identificaiton entityName:@"MealEntity"];
-            self.mealsInSections = [self convertMealEntityToMeal];
+            self.mealsInSections = [self fillMealsDictWithArray];
             [self.mealTable reloadData];
     }];
     deleteAction.backgroundColor = [UIColor redColor];
@@ -205,7 +198,7 @@ trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath;{
     }
     
     [self setMealsDictionary];
-    self.mealsInSections = [self convertMealEntityToMeal];
+    self.mealsInSections = [self fillMealsDictWithArray];
     [self.mealTable reloadData];
 }
 
