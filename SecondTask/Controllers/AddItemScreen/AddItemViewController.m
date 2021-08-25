@@ -27,7 +27,7 @@
 @property CoreDataManager *manager;
 @property BOOL isSuggestionButtonSuggesting;
 @property NSString *mostCommonMealType;
-@property int highestMealTypeCount;
+@property NSInteger highestMealTypeCount;
 @end
 
 @implementation AddItemViewController
@@ -150,28 +150,40 @@ numberOfRowsInComponent:(NSInteger)component {
     
     int currentMealTypeCount = 0;
     int mealDifference = 7;
+    BOOL mostCommonMealTypeChanged = NO;
+    
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:self.mealsRes.mealsTypes.count];
     
     for(MealType *m in self.mealsRes.mealsTypes) {
         for(MealEntity *e in allEntities) {
             if([e.mealType isEqual:m.mealTypeName]) {
                 currentMealTypeCount++;
             }
+            [dict setObject:[NSNumber numberWithInt:currentMealTypeCount] forKey:m.mealTypeName];
         }
-        if(currentMealTypeCount - self.highestMealTypeCount >= mealDifference) {
-            self.highestMealTypeCount = currentMealTypeCount;
-            self.mostCommonMealType = m.mealTypeName;
-        }
-        currentMealTypeCount = 0;   
+        currentMealTypeCount = 0;
     }
     
-    if([self.mostCommonMealType isEqual:@""]) {
-        self.isSuggestionButtonSuggesting = NO;
-        [self.suggestionButton disableRedDot];
-    } else {
+    NSInteger highestMealTypeCount = 0;
+    NSString *highestCountMealType = @"";
+    NSMutableArray *leftOverValues = [[NSMutableArray alloc] init];
+    for(MealType *m in self.mealsRes.mealsTypes) {
+        NSInteger mealTypeCount = [[dict objectForKey:m.mealTypeName]integerValue];
+        if(mealTypeCount > highestMealTypeCount) {
+            highestMealTypeCount = mealTypeCount;
+            highestCountMealType = m.mealTypeName;
+        } else {
+            [leftOverValues addObject:[NSNumber numberWithInteger:mealTypeCount]];
+        }
+    }
+    
+    if((highestMealTypeCount - [[leftOverValues valueForKeyPath:@"@max.self"]integerValue]) >= mealDifference) {
         self.isSuggestionButtonSuggesting = YES;
         [self.suggestionButton enableRedDot];
+    } else {
+        self.isSuggestionButtonSuggesting = NO;
+        [self.suggestionButton disableRedDot];
     }
-    
 }
 
 -(void)getSuggestedMeal:(Meal *)meal {
