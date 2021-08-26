@@ -314,6 +314,15 @@
                                     <action selector="chooseFromExistingButtonTap:" destination="JaF-gk-dff" eventType="touchUpInside" id="IU3-aV-9ca"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mka-S1-h6d" customClass="CustomDoneButton" customModule="SecondTask">
+                                <rect key="frame" x="185" y="828" width="43" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="Done"/>
+                                <connections>
+                                    <action selector="doneButtonTap:" destination="JaF-gk-dff" eventType="touchUpInside" id="ywb-u8-LML"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xGU-1w-dkA"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -348,6 +357,7 @@
                     <connections>
                         <outlet property="TitleTextField" destination="F1B-l9-nUf" id="GMu-fC-V0O"/>
                         <outlet property="dayTime" destination="mFG-Kh-Iy9" id="X38-mG-n4L"/>
+                        <outlet property="doneButton" destination="Mka-S1-h6d" id="MlP-CK-LDv"/>
                         <outlet property="mealTypePickerView" destination="P8y-zY-STB" id="ApT-cI-7ZD"/>
                         <outlet property="servingsPerDay" destination="bAh-dt-ybC" id="YyG-J9-YWz"/>
                         <outlet property="titleTextField" destination="F1B-l9-nUf" id="TXV-he-f1y"/>
@@ -470,7 +480,6 @@
         <!--Meal Suggestions Table View Controller-->
         <scene sceneID="XE0-Ej-2Ke">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eZb-GF-4Np" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="MealSuggestionsTableViewControllerId" id="zAP-WT-ZT5" customClass="MealSuggestionsTableViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3sl-nW-jK2">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -536,6 +545,7 @@
                         <outlet property="mealSuggestionTableView" destination="0wb-ME-Ode" id="3Ja-ut-otd"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eZb-GF-4Np" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="428.98550724637687" y="-1000.4464285714286"/>
         </scene>

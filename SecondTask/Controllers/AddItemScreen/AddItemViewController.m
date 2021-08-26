@@ -15,12 +15,13 @@
 #import "MealSuggestionsTableViewController.h"
 #import "CoreDataManager.h"
 
-@interface AddItemViewController () <UIPickerViewDataSource, UIPickerViewDelegate, ExistingMealsViewControllerDelegate, MealSuggestionsTableViewControllerDelegate>
+@interface AddItemViewController () <UIPickerViewDataSource, UIPickerViewDelegate, ExistingMealsViewControllerDelegate, MealSuggestionsTableViewControllerDelegate, UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UIPickerView *mealTypePickerView;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *dayTime;
 @property (weak, nonatomic) IBOutlet UITextField *servingsPerDay;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 @property MealsUIResources *mealsRes;
 @property NSArray *dayTimeTypes;
 @property SuggestionNotificationButton *suggestionButton;
@@ -42,26 +43,21 @@
     
     self.mealTypePickerView.dataSource = self;
     self.mealTypePickerView.delegate = self;
+    self.titleTextField.delegate = self;
+    self.servingsPerDay.delegate = self;
     
-    self.suggestionButton = [[SuggestionNotificationButton alloc] initButton];
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithCustomView:self.suggestionButton];
-    self.navigationItem.rightBarButtonItem = rightButton;
-    [self.suggestionButton addTarget:self
-                              action:@selector(suggestionButtonTap)
-       forControlEvents:UIControlEventTouchUpInside];
+    [self.doneButton setUserInteractionEnabled:NO];
+    
+    [self setNavBarRightSuggestionButton];
+    
+    [self.titleTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+    [self.servingsPerDay addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     self.manager = [[CoreDataManager alloc] init];
     [self setSuggestionButtonUsability];
-    
 }
 
--(IBAction)cancel:(id)sender {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(viewControllerDidCancel:)]) {
-         [self.delegate viewControllerDidCancel:self];
-     }
-}
-
--(IBAction)doneButtonTap:(id)sender {
+- (IBAction)doneButtonTap:(id)sender {
     NSInteger row = [self.mealTypePickerView selectedRowInComponent:0];
     NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
     f.numberStyle = NSNumberFormatterDecimalStyle;
@@ -71,7 +67,6 @@
     [self.delegate addMealToCoreData:self meal:meal];
     
     [self.navigationController popViewControllerAnimated:YES];
-    
 }
 
 -(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
@@ -119,7 +114,9 @@ numberOfRowsInComponent:(NSInteger)component {
     NSString *alertText = @"";
     NSMutableArray *actions = [[NSMutableArray alloc] init];
     if(self.isSuggestionButtonSuggesting == NO) {
-        alertText =@"You've eaten pretty good, you don't need any suggestions.";
+        alertText =@"You've been eatening pretty good, you don't need any suggestions.";
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Ok" style:UIAlertActionStyleCancel handler:nil];
+        [actions addObject:cancelAction];
     } else {
         alertText = [NSString stringWithFormat:@"You've eaten almost only %@, do you need suggested something else?", [self.mostCommonMealType lowercaseString]];
         UIAlertAction *showAction = [UIAlertAction actionWithTitle:@"Show me" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
@@ -130,14 +127,14 @@ numberOfRowsInComponent:(NSInteger)component {
             mealSuggestionsVC.delegate = self;
             [self presentViewController:mealSuggestionsVC animated:YES completion:nil];
         }];
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+        [actions addObject:cancelAction];
         [actions addObject:showAction];
     }
     
     UIAlertController *suggestionAlert = [UIAlertController alertControllerWithTitle:@"Suggestion" message:alertText preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
-    [actions addObject:cancelAction];
-
     for(UIAlertAction *action in actions) {
         [suggestionAlert addAction:action];
     }
@@ -150,7 +147,6 @@ numberOfRowsInComponent:(NSInteger)component {
     
     int currentMealTypeCount = 0;
     int mealDifference = 7;
-    BOOL mostCommonMealTypeChanged = NO;
     
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithCapacity:self.mealsRes.mealsTypes.count];
     
@@ -180,9 +176,11 @@ numberOfRowsInComponent:(NSInteger)component {
     if((highestMealTypeCount - [[leftOverValues valueForKeyPath:@"@max.self"]integerValue]) >= mealDifference) {
         self.isSuggestionButtonSuggesting = YES;
         [self.suggestionButton enableRedDot];
+        self.mostCommonMealType = highestCountMealType;
     } else {
         self.isSuggestionButtonSuggesting = NO;
         [self.suggestionButton disableRedDot];
+        self.mostCommonMealType = @"";
     }
 }
 
@@ -200,7 +198,30 @@ numberOfRowsInComponent:(NSInteger)component {
     self.servingsPerDay.text = [NSString stringWithFormat:@"%ld", meal.servingsPerDay];
 }
 
+-(void)setNavBarRightSuggestionButton {
+    self.suggestionButton = [[SuggestionNotificationButton alloc] initButton];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc] initWithCustomView:self.suggestionButton];
+    self.navigationItem.rightBarButtonItem = rightButton;
+    [self.suggestionButton addTarget:self
+                              action:@selector(suggestionButtonTap)
+       forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)touchesEnded: (NSSet *)touches withEvent: (UIEvent *)event {
+    for (UIView* view in self.view.subviews) {
+        if([view isKindOfClass:[UITextField class]])
+            [view resignFirstResponder];
+    }
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+
 -(void) viewWillAppear:(BOOL)animated {
+    [self setNavBarRightSuggestionButton];
     [self setSuggestionButtonUsability];
 }
 
