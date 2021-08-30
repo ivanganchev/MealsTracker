@@ -136,7 +136,7 @@
 
 -(NSMutableDictionary*) fillMealsDictWithArray {
     
-    NSMutableArray* meals = [self.manager fetchEntriesByDate:@"MealEntity" date:self.date1];
+    NSArray* meals = [self.manager fetchEntriesByDate:@"MealEntity" date:self.date1];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:[self.sections count]];
     

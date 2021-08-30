@@ -175,11 +175,11 @@ numberOfRowsInComponent:(NSInteger)component {
     
     if((highestMealTypeCount - [[leftOverValues valueForKeyPath:@"@max.self"]integerValue]) >= mealDifference) {
         self.isSuggestionButtonSuggesting = YES;
-        [self.suggestionButton enableRedDot];
+        [self.suggestionButton setRedDotEnabled:YES];
         self.mostCommonMealType = highestCountMealType;
     } else {
         self.isSuggestionButtonSuggesting = NO;
-        [self.suggestionButton disableRedDot];
+        [self.suggestionButton setRedDotEnabled:NO];
         self.mostCommonMealType = @"";
     }
 }
@@ -218,6 +218,14 @@ numberOfRowsInComponent:(NSInteger)component {
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)textFieldDidChange:(UITextField *)textField {
+    if(![self.titleTextField.text isEqual:@""] && ![self.servingsPerDay isEqual:@"0"]) {
+        
+    } else {
+      
+    }
 }
 
 -(void) viewWillAppear:(BOOL)animated {

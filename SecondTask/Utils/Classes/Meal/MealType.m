@@ -10,6 +10,7 @@
 @implementation MealType
 
 -(instancetype)initWithIcon:(NSString *)icon mealType:(NSString *)mealType {
+    self = [super init];
     self.mealIconName = icon;
     self.mealTypeName = mealType;
     

@@ -7,13 +7,12 @@
 
 #import "MealTypeView.h"
 @interface MealTypeView ()
-@property NSArray *mealTypesIcons;
 @end
 
 @implementation MealTypeView
 
 -(instancetype)initWithWidth:(float)componentWidth height:(float)componentHeight iconText:(nonnull NSString *)iconText mealType:(nonnull NSString *)mealType{
-    self = [super initWithFrame:CGRectMake(0, 0, componentWidth - 10.0f, componentHeight)];
+    self = [super initWithFrame:CGRectMake(0, 0, componentWidth, componentHeight)];
     
     UILabel *pickerViewLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 60)];
     UIImageView *pickerImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 29, 29)];

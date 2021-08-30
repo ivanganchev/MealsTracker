@@ -13,20 +13,17 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CoreDataManager : NSObject
-@property AppDelegate *appDelegate;
-@property NSManagedObjectContext *context;
-@property NSManagedObject *mealEntityManagedObject;
 
 -(instancetype)init;
 -(void)addMealEntityEntry:(Meal *)entry;
 -(void)removeEntryById:(NSUUID *)identification entityName:(NSString *)entityName;
--(NSMutableArray*)fetchAllEntries:(NSString *)entityName;
--(NSMutableArray*)fetchEntriesByDate:(NSString *)entityName date:(NSString *)date;
+-(NSArray*)fetchAllEntries:(NSString *)entityName;
+-(NSArray*)fetchEntriesByDate:(NSString *)entityName date:(NSString *)date;
 -(void)updateEntryById:(NSUUID *)identification entityName:(NSString *)entityName
     meal:(Meal *)meal;
--(NSMutableArray*)fetchAllEntriesExcept:(NSString *)entityName
+-(NSArray*)fetchAllEntriesExcept:(NSString *)entityName
                                mealType:(NSString *)mealType;
--(NSMutableArray*)convertMealEntityArrayToMealArray:(NSMutableArray *)array;
+-(NSArray*)convertMealEntityArrayToMealArray:(NSArray *)array;
 @end
 
 

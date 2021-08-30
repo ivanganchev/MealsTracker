@@ -9,15 +9,14 @@
 
 @implementation MealsUIResources
 -(instancetype)initMealTypes {
-    NSArray *mealTypes = [NSArray arrayWithObjects:@"Steak", @"Chicken", @"Fish", @"Vegeterian", @"Vegan", nil];
-    NSArray *mealTypesIcons = [NSArray arrayWithObjects:@"steak", @"chicken", @"fish", @"vegetarian", @"vegan", nil];
     
     self.mealsTypes = [[NSMutableArray alloc] init];
    
-    for(int i = 0; i < mealTypes.count; i++) {
-        MealType *m = [[MealType alloc] initWithIcon:[mealTypesIcons objectAtIndex:i] mealType:[mealTypes objectAtIndex:i]];
-        [self.mealsTypes addObject:m];
-    }
+    [self.mealsTypes addObject:[[MealType alloc] initWithIcon:@"steak" mealType:@"Steak"]];
+    [self.mealsTypes addObject:[[MealType alloc] initWithIcon:@"chicken" mealType:@"Chicken"]];
+    [self.mealsTypes addObject:[[MealType alloc] initWithIcon:@"fish" mealType:@"Fish"]];
+    [self.mealsTypes addObject:[[MealType alloc] initWithIcon:@"vegetarian" mealType:@"Vegeterian"]];
+    [self.mealsTypes addObject:[[MealType alloc] initWithIcon:@"vegan" mealType:@"vegan"]];
     
      return self;
 }
