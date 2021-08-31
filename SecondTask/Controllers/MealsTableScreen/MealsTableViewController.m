@@ -202,7 +202,7 @@ trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
--(void)getEditedMeal:(Meal *)meal {
+-(void)editMealViewController:(EditMealViewController *)viewController getEditMeal:(Meal *)meal {
     [self.manager updateEntryById:meal.identificaiton entityName:@"MealEntity" meal:meal];
     [self.mealTable reloadData];
 }

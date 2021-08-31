@@ -58,7 +58,7 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.delegate getSuggestedMeal:[self.mealItems objectAtIndex:indexPath.row]];
+    [self.delegate mealSuggestionsViewController:self didSelectMeal:[self.mealItems objectAtIndex:indexPath.row]];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

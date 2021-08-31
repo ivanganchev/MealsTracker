@@ -68,7 +68,8 @@ numberOfRowsInComponent:(NSInteger)component {
     self.meal.mealType = self.mealsRes.mealsTypes[[self.mealTypePickerView selectedRowInComponent:0]].mealTypeName;
     self.meal.dayTime = [self.dayTimeTypes objectAtIndex:[self.dayTime selectedSegmentIndex]];
     self.meal.servingsPerDay = [self.servingsPerDay.text integerValue];
-    [self.delegate getEditedMeal: self.meal];
+    [self.delegate editMealViewController:self getEditMeal:self.meal];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

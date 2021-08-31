@@ -9,17 +9,14 @@
 #import "Meal.h"
 
 NS_ASSUME_NONNULL_BEGIN
-@protocol EditMealViewControllerDelegate <NSObject>
-
-- (void)getEditedMeal:(Meal *)meal;
-
-@end
+@protocol EditMealViewControllerDelegate;
 
 @interface EditMealViewController : UIViewController
 @property Meal* meal;
 @property  (weak, nonatomic) id<EditMealViewControllerDelegate> delegate;
 @end
 
-
-
+@protocol EditMealViewControllerDelegate <NSObject>
+-(void)editMealViewController:(EditMealViewController *)viewController getEditMeal:(Meal *)meal;
+@end
 NS_ASSUME_NONNULL_END

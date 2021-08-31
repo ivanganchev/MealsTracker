@@ -101,7 +101,7 @@ numberOfRowsInComponent:(NSInteger)component {
     [self.navigationController pushViewController:existingMealsVC animated:YES];
 }
 
--(void)getExistingMeal:(Meal *)meal {
+-(void)existingMealsViewController:(ExistingMealsViewController *)viewController didSelectMeal:(Meal *)meal {
     self.titleTextField.text = meal.title;
     [self.mealTypePickerView selectRow:[self getPickerViewSelectedRowIndex:meal] inComponent:0 animated:YES];
     [self.dayTime setSelectedSegmentIndex: [self.dayTimeTypes indexOfObject:meal.dayTime]];
@@ -182,7 +182,7 @@ numberOfRowsInComponent:(NSInteger)component {
     }
 }
 
--(void)getSuggestedMeal:(Meal *)meal {
+-(void)mealSuggestionsViewController:(MealSuggestionsTableViewController *)viewController didSelectMeal:(Meal *)meal {
     self.titleTextField.text = meal.title;
     [self.mealTypePickerView selectRow:[self getPickerViewSelectedRowIndex:meal] inComponent:0 animated:YES];
     [self.dayTime setSelectedSegmentIndex: [self.dayTimeTypes indexOfObject:meal.dayTime]];

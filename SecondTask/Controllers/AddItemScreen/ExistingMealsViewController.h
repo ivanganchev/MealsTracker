@@ -9,11 +9,13 @@
 #import "Meal.h"
 
 NS_ASSUME_NONNULL_BEGIN
-@protocol ExistingMealsViewControllerDelegate <NSObject>
--(void)getExistingMeal:(Meal *)meal;
-@end
+@protocol ExistingMealsViewControllerDelegate;
 
 @interface ExistingMealsViewController : UIViewController
 @property  (weak, nonatomic) id<ExistingMealsViewControllerDelegate> delegate;
+@end
+
+@protocol ExistingMealsViewControllerDelegate <NSObject>
+-(void)existingMealsViewController:(ExistingMealsViewController *)viewController didSelectMeal:(Meal *)meal;
 @end
 NS_ASSUME_NONNULL_END

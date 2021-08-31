@@ -9,13 +9,14 @@
 #import "Meal.h"
 
 NS_ASSUME_NONNULL_BEGIN
-@protocol MealSuggestionsTableViewControllerDelegate <NSObject>
--(void)getSuggestedMeal:(Meal *)meal;
-@end
+@protocol MealSuggestionsTableViewControllerDelegate;
 
 @interface MealSuggestionsTableViewController : UIViewController
 @property NSString *mealTypeException;
 @property (weak, nonatomic) id<MealSuggestionsTableViewControllerDelegate> delegate;
 @end
 
+@protocol MealSuggestionsTableViewControllerDelegate <NSObject>
+-(void)mealSuggestionsViewController:(MealSuggestionsTableViewController *)viewController didSelectMeal:(Meal *)meal;
+@end
 NS_ASSUME_NONNULL_END

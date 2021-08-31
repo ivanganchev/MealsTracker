@@ -59,7 +59,7 @@
     return self.mealItems.count;
 }
 
--(NSMutableArray *)fillMealsArrayWithUniqueValues{
+-(NSMutableArray *)fetchUniqueMeals{
     NSMutableSet<Meal *> *uniqueMeals = [[NSMutableSet alloc] initWithArray:[self.manager fetchAllEntries:@"MealEntity"]];
     NSMutableArray *meals = [NSMutableArray arrayWithArray:[uniqueMeals allObjects]];
     return meals;
@@ -70,14 +70,14 @@
         self.mealItems = self.defaultMeals;
         
     } else {
-        self.mealItems = [self fillMealsArrayWithUniqueValues];
+        self.mealItems = [self fetchUniqueMeals];
     }
     
     [self.existingMealsTableView reloadData];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self.delegate getExistingMeal:[self.mealItems objectAtIndex:indexPath.row]];
+    [self.delegate existingMealsViewController:self didSelectMeal:[self.mealItems objectAtIndex:indexPath.row]];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
