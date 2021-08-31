@@ -9,27 +9,23 @@
 #import "Meal.h"
 
 @interface DefaultMealsProvider ()
-@property NSMutableArray *defaultMeals;
+@property(strong, nonatomic, readwrite) NSArray *defaultMeals;
 @end
 
 @implementation DefaultMealsProvider
 
 -(instancetype)initDefaultMeals {
-    self.defaultMeals = [[NSMutableArray alloc] init];
+    self = [super init];
     
-    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Beef with brocolli" mealType:@"Steak" date:@"" servingsPerDay:1 dayTime:@"Lunch"] atIndex:0];
-    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Tuna salad" mealType:@"Fish" date:@"" servingsPerDay:1 dayTime:@"Breakfast"] atIndex:1];
-    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Chicken Pasta" mealType:@"Chicken" date:@"" servingsPerDay:1 dayTime:@"Lunch"] atIndex:2];
-    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Moussaka" mealType:@"Vegan" date:@"" servingsPerDay:1 dayTime:@"Dinner"] atIndex:3];
-    [self.defaultMeals insertObject:[[Meal alloc] initWithTitle:@"Banitsa" mealType:@"Vegeterian" date:@"" servingsPerDay:1 dayTime:@"Breakfast"] atIndex:4];
+    self.defaultMeals = [[NSMutableArray alloc] initWithObjects:[[Meal alloc] initWithTitle:@"Beef with brocolli" mealType:@"Steak" date:@"" servingsPerDay:1 dayTime:@"Lunch"], [[Meal alloc] initWithTitle:@"Tuna salad" mealType:@"Fish" date:@"" servingsPerDay:1 dayTime:@"Breakfast"], [[Meal alloc] initWithTitle:@"Chicken Pasta" mealType:@"Chicken" date:@"" servingsPerDay:1 dayTime:@"Lunch"], [[Meal alloc] initWithTitle:@"Moussaka" mealType:@"Vegan" date:@"" servingsPerDay:1 dayTime:@"Dinner"], [[Meal alloc] initWithTitle:@"Banitsa" mealType:@"Vegeterian" date:@"" servingsPerDay:1 dayTime:@"Breakfast"],  nil];
     return self;
 }
 
--(NSMutableArray *)getDefaultMeals {
+-(NSArray *)getDefaultMeals {
     return self.defaultMeals;
 }
 
--(NSMutableArray *)getFilteredDefaultMeals:(NSString *)mealType {
+-(NSArray *)getFilteredDefaultMealsByType:(NSString *)mealType {
     NSMutableArray *filteredMeals = [[NSMutableArray alloc] init];
     for(int i = 0; i < self.defaultMeals.count; i++){
         Meal *m = [self.defaultMeals objectAtIndex:i];
@@ -37,6 +33,6 @@
             [filteredMeals addObject:m];
         }
     }
-    return filteredMeals;
+    return [filteredMeals copy];
 }
 @end

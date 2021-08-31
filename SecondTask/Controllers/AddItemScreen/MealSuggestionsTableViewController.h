@@ -15,7 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface MealSuggestionsTableViewController : UIViewController
 @property NSString *mealTypeException;
-@property  (weak, nonatomic) id<MealSuggestionsTableViewControllerDelegate> delegate;
+@property (weak, nonatomic) id<MealSuggestionsTableViewControllerDelegate> delegate;
 @end
 
 NS_ASSUME_NONNULL_END

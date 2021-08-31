@@ -10,9 +10,10 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DefaultMealsProvider : NSObject
+@property(strong, nonatomic, readonly) NSArray *defaultMeals;
 -(instancetype)initDefaultMeals;
--(NSMutableArray *)getDefaultMeals;
--(NSMutableArray *)getFilteredDefaultMeals:(NSString *)mealType;
+-(NSArray *)getDefaultMeals;
+-(NSArray *)getFilteredDefaultMealsByType:(NSString *)mealType;
 @end
 
 NS_ASSUME_NONNULL_END

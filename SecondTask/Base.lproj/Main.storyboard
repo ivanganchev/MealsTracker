@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--DateP Icker View Controller-->
+        <!--Date Picker View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="DatePIckerViewController" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="DatePickerViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -23,8 +23,11 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" translatesAutoresizingMaskIntoConstraints="NO" id="FSa-Gg-D0J">
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="inline" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FSa-Gg-D0J">
                                 <rect key="frame" x="20" y="304.5" width="374" height="341"/>
+                                <date key="date" timeIntervalSinceReferenceDate="652082209.85425794">
+                                    <!--2021-08-31 05:56:49 +0000-->
+                                </date>
                                 <connections>
                                     <action selector="dateChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="PBl-jc-PIV"/>
                                     <action selector="dateChanged:" destination="BSx-tw-ozA" eventType="valueChanged" id="zqq-he-P8H"/>

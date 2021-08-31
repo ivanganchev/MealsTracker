@@ -28,7 +28,6 @@
 
 @implementation MealsTableViewController
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.segmentedControl = [[UISegmentedControl alloc] initWithItems:@[@"Meal Type", @"Day Time"]];
@@ -49,7 +48,7 @@
     self.mealTable.delegate = self;
     
     self.manager = [[CoreDataManager alloc] init];
-    self.mealsInSections = [self fillMealsDictWithArray];
+    self.mealsInSections = [self loadMealsDict];
 }
 
 - (IBAction)addMeal:(id)sender {
@@ -62,40 +61,32 @@
     [self.navigationController pushViewController:addItemVC animated:YES];
 }
 
-- (void)viewControllerDidCancel:(AddItemViewController *)viewController {
-}
-
-- (void)addMealToCoreData:(AddItemViewController *)viewController meal:(nonnull Meal *)meal{
-    meal.date = self.date1;
+- (void)mealAdded:(AddItemViewController *)viewController meal:(nonnull Meal *)meal{
+    meal.date = self.date;
     [self.manager addMealEntityEntry:meal];
-    self.mealsInSections = [self fillMealsDictWithArray];
+    self.mealsInSections = [self loadMealsDict];
     [self.mealTable reloadData];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-     UITableViewMealsCell *cell = [self.mealTable dequeueReusableCellWithIdentifier:@"UITableViewMealsCellId"];
+     UITableViewMealsCell *cell = [self.mealTable dequeueReusableCellWithIdentifier:UITableViewMealsCell.getCellId];
     
     if(cell == nil) {
-        cell = [[UITableViewMealsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewMealsCellId"];
+        cell = [[UITableViewMealsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:UITableViewMealsCell.getCellId];
     }
     
     NSArray *meals = [self.mealsInSections objectForKey:self.sections[indexPath.section]];
     
     Meal *meal = [meals objectAtIndex:indexPath.row];
     
-    cell.mealTitleLabel.text = meal.title;
-    cell.mealServingsLabel.text = [NSString stringWithFormat:@"%ld", meal.servingsPerDay];
+    [cell setUpWithMeal:meal];
                                        
     return cell;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger numOfSections = self.sections.count;
-    NSInteger numOfRowsInSections = 0;
-    for(id key in self.sections) {
-        NSArray *a = [self.mealsInSections objectForKey:key];
-        numOfRowsInSections += a.count;
-    }
+    NSInteger numOfRowsInSections = [self getNumberOfRowsInSection];
     
     if(numOfRowsInSections > 0) {
         self.mealsTitle.hidden = NO;
@@ -116,7 +107,7 @@
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSString *sectionType = [self.sections objectAtIndex:section];
     
-    NSMutableArray *tempArr = [self.mealsInSections objectForKey:sectionType];
+    NSArray *tempArr = [self.mealsInSections objectForKey:sectionType];
     
     return tempArr.count;
 }
@@ -134,9 +125,9 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(NSMutableDictionary*) fillMealsDictWithArray {
+-(NSMutableDictionary*) loadMealsDict {
     
-    NSArray* meals = [self.manager fetchEntriesByDate:@"MealEntity" date:self.date1];
+    NSArray* meals = [self.manager fetchEntriesByDate:@"MealEntity" date:self.date];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:[self.sections count]];
     
@@ -164,7 +155,7 @@
 }
 
 -(UISwipeActionsConfiguration *)tableView:(UITableView *)tableView
-trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath;{
+trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath {
     UIContextualAction *editAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Edit" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         UIStoryboard *storyBoard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         
@@ -180,7 +171,7 @@ trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath;{
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
             NSMutableArray<Meal*> *tempArr = [self.mealsInSections objectForKey:self.sections[indexPath.section]];
             [self.manager removeEntryById:tempArr[indexPath.row].identificaiton entityName:@"MealEntity"];
-            self.mealsInSections = [self fillMealsDictWithArray];
+            self.mealsInSections = [self loadMealsDict];
             [self.mealTable reloadData];
     }];
     deleteAction.backgroundColor = [UIColor redColor];
@@ -198,7 +189,7 @@ trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath;{
     }
     
     [self setMealsDictionary];
-    self.mealsInSections = [self fillMealsDictWithArray];
+    self.mealsInSections = [self loadMealsDict];
     [self.mealTable reloadData];
 }
 
@@ -214,6 +205,16 @@ trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath;{
 -(void)getEditedMeal:(Meal *)meal {
     [self.manager updateEntryById:meal.identificaiton entityName:@"MealEntity" meal:meal];
     [self.mealTable reloadData];
+}
+
+-(NSInteger)getNumberOfRowsInSection {
+    NSInteger numOfRowsInSections = 0;
+    for(id key in self.sections) {
+        NSArray *a = [self.mealsInSections objectForKey:key];
+        numOfRowsInSections += a.count;
+    }
+    
+    return numOfRowsInSections;
 }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  DatePIckerViewController.h
+//  DatePickerViewController.h
 //  SecondTask
 //
 //  Created by A-Team Intern on 10.08.21.
@@ -9,7 +9,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DatePIckerViewController : MealsTableViewController
+@interface DatePickerViewController : UIViewController
 
 @end
 

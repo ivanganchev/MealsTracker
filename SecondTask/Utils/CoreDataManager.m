@@ -105,7 +105,6 @@
     NSError *error;
     NSArray *items = [self convertMealEntityArrayToMealArray:[NSArray arrayWithArray:[self.context executeFetchRequest:requestMeals error:&error]]];
     
-    
     return items;
 }
 
@@ -116,6 +115,6 @@
         [newArray addObject:m];
     }
     
-    return [newArray copy];
+    return newArray;
 }
 @end

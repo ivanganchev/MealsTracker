@@ -10,7 +10,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface MealsUIResources : NSObject
-@property NSMutableArray<MealType*> *mealsTypes;
+@property(strong, nonatomic, readonly) NSMutableArray<MealType*> *mealsTypes;
 -(instancetype) initMealTypes;
 @end
 

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8E0D1A0C26C2CEB20028B5FB /* DatePIckerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D1A0B26C2CEB20028B5FB /* DatePIckerViewController.m */; };
+		8E0D1A0C26C2CEB20028B5FB /* DatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E0D1A0B26C2CEB20028B5FB /* DatePickerViewController.m */; };
 		8E4A871C26CD23E6001985FA /* MealModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A871A26CD23E6001985FA /* MealModel.xcdatamodeld */; };
 		8E4A873226CE7557001985FA /* CoreDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A873126CE7557001985FA /* CoreDataManager.m */; };
 		8E4A873C26CF929C001985FA /* ExistingMealsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8E4A873B26CF929C001985FA /* ExistingMealsViewController.m */; };
@@ -32,8 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		8E0D1A0A26C2CEB20028B5FB /* DatePIckerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DatePIckerViewController.h; sourceTree = "<group>"; };
-		8E0D1A0B26C2CEB20028B5FB /* DatePIckerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DatePIckerViewController.m; sourceTree = "<group>"; };
+		8E0D1A0A26C2CEB20028B5FB /* DatePickerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DatePickerViewController.h; sourceTree = "<group>"; };
+		8E0D1A0B26C2CEB20028B5FB /* DatePickerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DatePickerViewController.m; sourceTree = "<group>"; };
 		8E4A871B26CD23E6001985FA /* MealModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MealModel.xcdatamodel; sourceTree = "<group>"; };
 		8E4A873026CE7557001985FA /* CoreDataManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataManager.h; sourceTree = "<group>"; };
 		8E4A873126CE7557001985FA /* CoreDataManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataManager.m; sourceTree = "<group>"; };
@@ -89,8 +89,8 @@
 		8E4A872026CD2850001985FA /* DatePickerScreen */ = {
 			isa = PBXGroup;
 			children = (
-				8E0D1A0A26C2CEB20028B5FB /* DatePIckerViewController.h */,
-				8E0D1A0B26C2CEB20028B5FB /* DatePIckerViewController.m */,
+				8E0D1A0A26C2CEB20028B5FB /* DatePickerViewController.h */,
+				8E0D1A0B26C2CEB20028B5FB /* DatePickerViewController.m */,
 			);
 			path = DatePickerScreen;
 			sourceTree = "<group>";
@@ -306,7 +306,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8E4A871C26CD23E6001985FA /* MealModel.xcdatamodeld in Sources */,
-				8E0D1A0C26C2CEB20028B5FB /* DatePIckerViewController.m in Sources */,
+				8E0D1A0C26C2CEB20028B5FB /* DatePickerViewController.m in Sources */,
 				8E4A876426D52070001985FA /* MealSuggestionsTableViewController.m in Sources */,
 				8E4A873226CE7557001985FA /* CoreDataManager.m in Sources */,
 				8E951C1E26B921A0006A4950 /* MealsTableViewController.m in Sources */,

@@ -46,14 +46,19 @@
     self.titleTextField.delegate = self;
     self.servingsPerDay.delegate = self;
     
-    [self.doneButton setUserInteractionEnabled:NO];
+//    [self.doneButton setEnabled:NO];
     
     [self setNavBarRightSuggestionButton];
     
-    [self.titleTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
-    [self.servingsPerDay addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+//    [self.titleTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+//    [self.servingsPerDay addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
     
     self.manager = [[CoreDataManager alloc] init];
+    [self setSuggestionButtonUsability];
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    [self setNavBarRightSuggestionButton];
     [self setSuggestionButtonUsability];
 }
 
@@ -64,7 +69,7 @@
     
     Meal *meal = [[Meal alloc] initWithTitle:self.titleTextField.text mealType:self.mealsRes.mealsTypes[row].mealTypeName date:@"today" servingsPerDay:  [self.servingsPerDay.text intValue] dayTime: [self.dayTime titleForSegmentAtIndex:[self.dayTime selectedSegmentIndex]]];
 
-    [self.delegate addMealToCoreData:self meal:meal];
+    [self.delegate mealAdded:self meal:meal];
     
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -98,14 +103,7 @@ numberOfRowsInComponent:(NSInteger)component {
 
 -(void)getExistingMeal:(Meal *)meal {
     self.titleTextField.text = meal.title;
-    int index = 0;
-    for(int i = 0; i < self.mealsRes.mealsTypes.count; i++) {
-        if([self.mealsRes.mealsTypes[i].mealTypeName isEqual:meal.mealType]) {
-            index = i;
-            break;
-        }
-    }
-    [self.mealTypePickerView selectRow:index inComponent:0 animated:YES];
+    [self.mealTypePickerView selectRow:[self getPickerViewSelectedRowIndex:meal] inComponent:0 animated:YES];
     [self.dayTime setSelectedSegmentIndex: [self.dayTimeTypes indexOfObject:meal.dayTime]];
     self.servingsPerDay.text = [NSString stringWithFormat:@"%ld", meal.servingsPerDay];
 }
@@ -186,14 +184,7 @@ numberOfRowsInComponent:(NSInteger)component {
 
 -(void)getSuggestedMeal:(Meal *)meal {
     self.titleTextField.text = meal.title;
-    int index = 0;
-    for(int i = 0; i < self.mealsRes.mealsTypes.count; i++) {
-        if([self.mealsRes.mealsTypes[i].mealTypeName isEqual:meal.mealType]) {
-            index = i;
-            break;
-        }
-    }
-    [self.mealTypePickerView selectRow:index inComponent:0 animated:YES];
+    [self.mealTypePickerView selectRow:[self getPickerViewSelectedRowIndex:meal] inComponent:0 animated:YES];
     [self.dayTime setSelectedSegmentIndex: [self.dayTimeTypes indexOfObject:meal.dayTime]];
     self.servingsPerDay.text = [NSString stringWithFormat:@"%ld", meal.servingsPerDay];
 }
@@ -228,9 +219,16 @@ numberOfRowsInComponent:(NSInteger)component {
     }
 }
 
--(void) viewWillAppear:(BOOL)animated {
-    [self setNavBarRightSuggestionButton];
-    [self setSuggestionButtonUsability];
+-(NSInteger)getPickerViewSelectedRowIndex:(Meal *)meal {
+    int index = 0;
+    for(int i = 0; i < self.mealsRes.mealsTypes.count; i++) {
+        if([self.mealsRes.mealsTypes[i].mealTypeName isEqual:meal.mealType]) {
+            index = i;
+            break;
+        }
+    }
+    
+    return index;
 }
 
 @end

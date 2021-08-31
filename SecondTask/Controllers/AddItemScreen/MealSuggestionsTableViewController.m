@@ -15,7 +15,7 @@
                 UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UITableView *mealSuggestionTableView;
 @property CoreDataManager *manager;
-@property NSMutableArray<Meal *> *mealItems;
+@property NSArray<Meal *> *mealItems;
 
 @end
 
@@ -29,23 +29,21 @@
     
     self.manager = [[CoreDataManager alloc] init];
     DefaultMealsProvider *provider = [[DefaultMealsProvider alloc] initDefaultMeals];
-    self.mealItems = [provider getFilteredDefaultMeals:self.mealTypeException];
+    self.mealItems = [provider getFilteredDefaultMealsByType:self.mealTypeException];
     self.mealItems = [[self.mealItems arrayByAddingObjectsFromArray:[self fillMealArray]]mutableCopy];
     self.mealItems = [[[[NSMutableSet alloc] initWithArray:self.mealItems] allObjects] mutableCopy];
 }
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
-    UITableViewMealsCell *cell = [self.mealSuggestionTableView dequeueReusableCellWithIdentifier:@"UITableViewMealsCellId"];
+    UITableViewMealsCell *cell = [self.mealSuggestionTableView dequeueReusableCellWithIdentifier:UITableViewMealsCell.getCellId];
    
    if(cell == nil) {
-       cell = [[UITableViewMealsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewMealsCellId"];
+       cell = [[UITableViewMealsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:UITableViewMealsCell.getCellId];
    }
     
     Meal* meal = [self.mealItems objectAtIndex:indexPath.row];
-    
-    cell.mealTitleLabel.text = meal.title;
-    cell.mealServingsLabel.text = [NSString stringWithFormat:@"%ld", meal.servingsPerDay];
+    [cell setUpWithMeal:meal];
     return cell;
 }
 

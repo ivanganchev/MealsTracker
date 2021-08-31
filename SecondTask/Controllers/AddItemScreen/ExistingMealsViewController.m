@@ -17,8 +17,8 @@
 @property UISegmentedControl *segmentedControl;
 @property (weak, nonatomic) IBOutlet UITableView *existingMealsTableView;
 @property CoreDataManager *manager;
-@property NSMutableArray<Meal *> *mealItems;
-@property NSMutableArray<Meal *> *defaultMeals;
+@property NSArray<Meal *> *mealItems;
+@property NSArray<Meal *> *defaultMeals;
 @end
 
 @implementation ExistingMealsViewController
@@ -43,16 +43,15 @@
 
 - (nonnull UITableViewCell *)tableView:(nonnull UITableView *)tableView cellForRowAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
-    UITableViewMealsCell *cell = [self.existingMealsTableView dequeueReusableCellWithIdentifier:@"UITableViewMealsCellId"];
+    UITableViewMealsCell *cell = [self.existingMealsTableView dequeueReusableCellWithIdentifier:UITableViewMealsCell.getCellId];
    
    if(cell == nil) {
-       cell = [[UITableViewMealsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"UITableViewMealsCellId"];
+       cell = [[UITableViewMealsCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:UITableViewMealsCell.getCellId];
    }
     
     Meal* meal = [self.mealItems objectAtIndex:indexPath.row];
     
-    cell.mealTitleLabel.text = meal.title;
-    cell.mealServingsLabel.text = [NSString stringWithFormat:@"%ld", meal.servingsPerDay];
+    [cell setUpWithMeal:meal];
     return cell;
 }
 
